@@ -220,6 +220,7 @@ void CUIGameCraft::CraftSelect(ItemCraftPannel* panel)
 	label_craft_info->SetText(Text);
 
 	last_selected = panel->item_to_craft;
+	reqvest.clear();
 	reqvest = panel->reqvest;
 }
 

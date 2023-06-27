@@ -46,7 +46,7 @@ public:
 
 	virtual		void				on_death(CSE_Abstract* e_dest, CSE_Abstract* e_src);
 
-	void CraftItem(NET_Packet P, ClientID sender);
+	void CraftItem(NET_Packet& P, ClientID const& sender);
 
 	virtual		void				OnPlayerTrade(NET_Packet &P, ClientID const & clientID);
 	virtual		void				OnTransferMoney(NET_Packet &P, ClientID const & clientID);

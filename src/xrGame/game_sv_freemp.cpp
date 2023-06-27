@@ -402,7 +402,7 @@ void game_sv_freemp::on_death(CSE_Abstract* e_dest, CSE_Abstract* e_src)
 #include "Inventory.h"
 
 
-void game_sv_freemp::CraftItem(NET_Packet P, ClientID sender)
+void game_sv_freemp::CraftItem(NET_Packet& P, ClientID const& sender)
 {
 	game_PlayerState* ps = get_id(sender);
 	bool crafted = false;
@@ -411,32 +411,36 @@ void game_sv_freemp::CraftItem(NET_Packet P, ClientID sender)
 		xr_vector<shared_str> reqvest;
 		shared_str item_craft;
 		P.r_stringZ(item_craft);
-		for (int i = 0; i < P.r_u8(); i++)
+		int count_items = P.r_u8();
+		//Msg("ResultItem: %s, req_count_items: %d", item_craft.c_str(), count_items);
+
+		for (int i = 0; i < count_items; i++)
 		{
 			shared_str item;
 			P.r_stringZ(item);
 			reqvest.push_back(item);
+			//Msg("ReqvestItem[%d]: %s", i, item.c_str());
 		}
 
 		CActor* actor = smart_cast<CActor*>(Level().Objects.net_Find(ps->GameID));
 		if (actor)
 		{
 			xr_map<u16, bool> destroy;
-			TIItemContainer items_actor;
-			actor->inventory().AddAvailableItems(items_actor, false);
+			TIItemContainer items_actor = actor->inventory().m_all;
 
- 			u8 cnt = 0;
-			for (auto it : items_actor)
+			u8 cnt = 0;
+			for (auto item : reqvest)
 			{
 				if(cnt>=reqvest.size())
 					break;
 				
-				for (auto item : reqvest)
+				for (auto it : items_actor)
 				{
 					if (strstr(it->m_section_id.c_str(), item.c_str()) && !destroy[it->object_id()])
 					{
 						cnt++;
 						destroy[it->object_id()] = true;
+						break;
 					}
 				}
 			}
@@ -447,6 +451,19 @@ void game_sv_freemp::CraftItem(NET_Packet P, ClientID sender)
 			{
 				crafted = true;
 
+				if (pSettings->section_exist(item_craft.c_str()))
+				{
+					CSE_Abstract* E = spawn_begin(item_craft.c_str());
+					E->ID_Parent = ps->GameID;
+					E->s_flags.assign(M_SPAWN_OBJECT_LOCAL);
+					spawn_end(E, m_server->GetServerClient()->ID);
+				}
+				else
+				{
+					Msg("CheckItem: %s", item_craft);
+					return;
+				}
+
 				for (auto item : destroy)
 				{
 					NET_Packet P;
@@ -456,11 +473,6 @@ void game_sv_freemp::CraftItem(NET_Packet P, ClientID sender)
 					P.w_u16(item.first);
 					Level().Send(P, net_flags(TRUE, TRUE));
 				}
-
-				CSE_Abstract* E = spawn_begin(item_craft.c_str());
-				E->ID_Parent = ps->GameID;
-				E->s_flags.assign(M_SPAWN_OBJECT_LOCAL);
-				spawn_end(E, m_server->GetServerClient()->ID);
 			}
 		}
 	}

@@ -102,7 +102,7 @@ public:
 
 	void ReciveResult(NET_Packet& packet);
 
-	LPCSTR last_selected;
+	shared_str last_selected;
 	xr_vector<shared_str> reqvest;
 
 };
