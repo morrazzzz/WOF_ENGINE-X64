@@ -688,10 +688,6 @@ int APIENTRY WinMain_impl(HINSTANCE hInstance,
 //	foo();
 #ifndef DEDICATED_SERVER
 
-	// Check for virtual memory
-	if ( ( strstr( lpCmdLine , "--skipmemcheck" ) == NULL ) && IsOutOfVirtualMemory() )
-		return 0;
-
 	// Parental Control for Vista and upper
 	if ( ! IsPCAccessAllowed() ) {
 		MessageBox( NULL , "Access restricted" , "Parental Control" , MB_OK | MB_ICONERROR );
