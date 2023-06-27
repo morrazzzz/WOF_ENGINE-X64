@@ -428,6 +428,9 @@ void game_sv_freemp::CraftItem(NET_Packet P, ClientID sender)
  			u8 cnt = 0;
 			for (auto it : items_actor)
 			{
+				if(cnt>=reqvest.size())
+					break;
+				
 				for (auto item : reqvest)
 				{
 					if (strstr(it->m_section_id.c_str(), item.c_str()) && !destroy[it->object_id()])
@@ -438,6 +441,8 @@ void game_sv_freemp::CraftItem(NET_Packet P, ClientID sender)
 				}
 			}
 
+			Msg ("Craft:%d==%d", cnt, reqvest.size());
+		
 			if (cnt == reqvest.size())
 			{
 				crafted = true;
