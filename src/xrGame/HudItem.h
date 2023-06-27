@@ -56,8 +56,6 @@ protected:
 	enum{
 		fl_pending			= (1<<0),
 		fl_renderhud		= (1<<1),
-		fl_inertion_enable	= (1<<2),
-		fl_inertion_allow	= (1<<3),
 	};
 
 	struct{
@@ -135,8 +133,6 @@ public:
 	attachable_hud_item*		HudItemData				();
 	virtual void				on_a_hud_attach			();
 	virtual void				on_b_hud_detach			();
-	IC BOOL						HudInertionEnabled		()	const			{ return m_huditem_flags.test(fl_inertion_enable);}
-	IC BOOL						HudInertionAllowed		()	const			{ return m_huditem_flags.test(fl_inertion_allow);}
 	virtual void				render_hud_mode			()					{};
 	virtual bool				need_renderable			()					{return true;};
 	virtual void				render_item_3d_ui		()					{}
@@ -151,9 +147,6 @@ protected:
 	//кадры момента пересчета XFORM и FirePos
 	u32							dwFP_Frame;
 	u32							dwXF_Frame;
-
-	IC void						EnableHudInertion		(BOOL B)		{ m_huditem_flags.set(fl_inertion_enable, B);}
-	IC void						AllowHudInertion		(BOOL B)		{ m_huditem_flags.set(fl_inertion_allow, B);}
 
 	u32							m_animation_slot;
 

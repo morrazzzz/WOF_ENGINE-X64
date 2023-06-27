@@ -759,17 +759,6 @@ void player_hud::calc_transform(u16 attach_slot_idx, const Fmatrix& offset, Fmat
 	result.mulB_43			(offset);
 }
 
-bool player_hud::inertion_allowed()
-{
-	attachable_hud_item* hi = m_attached_items[0];
-	if(hi)
-	{
-		bool res = ( hi->m_parent_hud_item->HudInertionEnabled() && hi->m_parent_hud_item->HudInertionAllowed() );
-		return	res;
-	}
-	return true;
-}
-
 void player_hud::OnMovementChanged(ACTOR_DEFS::EMoveCommand cmd)
 {
 	if(cmd==0)
