@@ -636,8 +636,14 @@ bool CInventory::Action(u16 cmd, u32 flags)
 {
 	CActor *pActor = smart_cast<CActor*>(m_pOwner);
 	
-	if (pActor->MpSafeMODE() || pActor->MpAnimationMODE())
-		return false;
+	if (pActor)
+	{
+		if (pActor->MpSafeMODE())
+			return false;
+
+		if (pActor->MpAnimationMODE())
+			return false;
+	}
 
 	if (pActor)
 	{
