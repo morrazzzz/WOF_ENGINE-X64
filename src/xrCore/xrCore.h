@@ -82,6 +82,7 @@
 #include <math.h>
 #include <string.h>
 #include <typeinfo>
+#include <thread>
 //#include <process.h>
 
 #ifndef DEBUG
