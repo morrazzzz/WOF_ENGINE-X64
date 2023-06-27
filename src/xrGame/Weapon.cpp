@@ -222,6 +222,14 @@ void CWeapon::Load		(LPCSTR section)
 	inherited::Load					(section);
 	CShootingObject::Load			(section);
 
+	m_base_inertion = m_current_inertion;
+
+	m_zoom_inertion.PitchOffsetR = READ_IF_EXISTS(pSettings, r_float, hud_sect, "inertion_aim_pitch_offset_r", 0.0f);
+	m_zoom_inertion.PitchOffsetD = READ_IF_EXISTS(pSettings, r_float, hud_sect, "inertion_aim_pitch_offset_d", 0.0f);
+	m_zoom_inertion.PitchOffsetN = READ_IF_EXISTS(pSettings, r_float, hud_sect, "inertion_aim_pitch_offset_n", 0.0f);
+
+	m_zoom_inertion.OriginOffset = READ_IF_EXISTS(pSettings, r_float, hud_sect, "inertion_aim_origin_offset", ORIGIN_OFFSET * 0.5f);
+	m_zoom_inertion.TendtoSpeed = READ_IF_EXISTS(pSettings, r_float, hud_sect, "inertion_aim_tendto_speed", TENDTO_SPEED);
 	
 	if(pSettings->line_exist(section, "flame_particles_2"))
 		m_sFlameParticles2 = pSettings->r_string(section, "flame_particles_2");
@@ -891,6 +899,10 @@ void CWeapon::UpdateCL		()
 	{
 		m_bRememberActorNVisnStatus = false;
 		EnableActorNVisnAfterZoom();
+	}
+
+	if (!!GetHUDmode()) {
+		m_current_inertion.lerp(m_base_inertion, m_zoom_inertion, m_zoom_params.m_fZoomRotationFactor);
 	}
 
 	if(m_zoom_params.m_pVision)

@@ -1142,6 +1142,7 @@
     <ClInclude Include="GameCraft.h" />
     <ClInclude Include="game_cl_roleplay.h" />
     <ClInclude Include="game_sv_roleplay.h" />
+    <ClInclude Include="InertionData.h" />
     <ClInclude Include="net_physics_state.h" />
     <ClInclude Include="script_event.h" />
     <ClInclude Include="UIGameFMP.h" />

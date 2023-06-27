@@ -7,6 +7,7 @@
 #include "static_cast_checked.hpp"
 #include "actoreffector.h"
 #include "../xrEngine/IGame_Persistent.h"
+#include "InertionData.h"
 
 player_hud* g_player_hud = NULL;
 Fvector _ancor_pos;
@@ -609,17 +610,14 @@ void player_hud::update_additional	(Fmatrix& trans)
 		m_attached_items[1]->update_hud_additional(trans);
 }
 
-
-static const float PITCH_OFFSET_R	= 0.017f;
-static const float PITCH_OFFSET_N	= 0.012f;
-static const float PITCH_OFFSET_D	= 0.02f;
-static const float ORIGIN_OFFSET	= -0.05f;
-static const float TENDTO_SPEED		= 5.f;
-
 void player_hud::update_inertion(Fmatrix& trans)
 {
-	if ( inertion_allowed() )
+	auto hi = m_attached_items[0] ? m_attached_items[0] : m_attached_items[1];
+
+	if (hi)
 	{
+		auto& inertion = hi->m_parent_hud_item->CurrentInertionData();
+
 		Fmatrix								xform;
 		Fvector& origin						= trans.c; 
 		xform								= trans;
@@ -641,14 +639,14 @@ void player_hud::update_inertion(Fmatrix& trans)
 		}
 
 		// tend to forward
-		st_last_dir.mad						(diff_dir,TENDTO_SPEED*Device.fTimeDelta);
-		origin.mad							(diff_dir,ORIGIN_OFFSET);
+		st_last_dir.mad(diff_dir, inertion.TendtoSpeed * Device.fTimeDelta);
+		origin.mad(diff_dir, inertion.OriginOffset);
 
 		// pitch compensation
-		float pitch							= angle_normalize_signed(xform.k.getP());
-		origin.mad							(xform.k,	-pitch * PITCH_OFFSET_D);
-		origin.mad							(xform.i,	-pitch * PITCH_OFFSET_R);
-		origin.mad							(xform.j,	-pitch * PITCH_OFFSET_N);
+		float pitch = angle_normalize_signed(xform.k.getP());
+		origin.mad(xform.k, -pitch * inertion.PitchOffsetD);
+		origin.mad(xform.i, -pitch * inertion.PitchOffsetR);
+		origin.mad(xform.j, -pitch * inertion.PitchOffsetN);
 	}
 }
 

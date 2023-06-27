@@ -9,6 +9,7 @@ class CMotionDef;
 #include "actor_defs.h"
 #include "inventory_space.h"
 #include "hudsound.h"
+#include "InertionData.h"
 
 struct attachable_hud_item;
 class motion_marks;
@@ -158,6 +159,8 @@ protected:
 
 	HUD_SOUND_COLLECTION		m_sounds;
 
+	InertionData				m_current_inertion;
+
 private:
 	CPhysicItem					*m_object;
 	CInventoryItem				*m_item;
@@ -167,6 +170,8 @@ public:
 	IC CPhysicItem&				object					() const		{ VERIFY(m_object); return(*m_object);}
 	IC CInventoryItem&			item					() const		{ VERIFY(m_item); return(*m_item);}
 	IC		u32					animation_slot			()				{ return m_animation_slot;}
+
+	InertionData& CurrentInertionData() { return m_current_inertion; }
 
 	virtual void				on_renderable_Render	() = 0;
 	virtual void				debug_draw_firedeps		() {};

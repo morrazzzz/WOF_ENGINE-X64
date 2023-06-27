@@ -7452,6 +7452,9 @@
     <ClInclude Include="UIPda_Chat.h">
       <Filter>UI\Common\PDA\CHAT</Filter>
     </ClInclude>
+    <ClInclude Include="InertionData.h">
+      <Filter>Core\Client\Objects\items &amp; weapons\Weapons\Custom Weapon</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="damage_manager.cpp">
