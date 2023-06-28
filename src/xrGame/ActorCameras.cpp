@@ -26,6 +26,10 @@
 #include "IKLimbsController.h"
 #include "GamePersistent.h"
 
+ENGINE_API extern float psHUD_FOV; //--#SM+#--
+ENGINE_API extern float psHUD_FOV_def; //--#SM+#--
+
+
 void CActor::cam_Set	(EActorCameras style)
 {
 	CCameraBase* old_cam = cam_Active();
@@ -283,14 +287,9 @@ static const float	ik_cam_shift_tolerance = 0.2f;
 static const float	ik_cam_shift_speed = 0.01f;
 #endif
 
-ENGINE_API extern float psHUD_FOV; //--#SM+#--
-ENGINE_API extern float psHUD_FOV_def; //--#SM+#--
-
-
 void CActor::cam_Update(float dt, float fFOV)
 {
-	if(m_holder)		return;
-
+	// HUD FOV Update --#SM+#--
 	if (this == Level().CurrentControlEntity())
 	{
 		CWeapon* pWeapon = smart_cast<CWeapon*>(this->inventory().ActiveItem());
@@ -299,7 +298,9 @@ void CActor::cam_Update(float dt, float fFOV)
 		else
 			psHUD_FOV = psHUD_FOV_def;
 	}
+	//--#SM+#--
 
+	if (m_holder)		return;
 	if( (mstate_real & mcClimb) && (cam_active!=eacFreeLook) )
 		camUpdateLadder(dt);
 	on_weapon_shot_update();

@@ -75,6 +75,7 @@ CWeapon::CWeapon()
 	m_ef_weapon_type		= u32(-1);
 	m_UIScope				= NULL;
 	m_set_next_ammoType_on_reload = undefined_ammo_type;
+	m_nearwall_last_hud_fov = psHUD_FOV_def;
 	m_crosshair_inertion	= 0.f;
 	m_cur_scope				= NULL;
 	m_bRememberActorNVisnStatus = false;
