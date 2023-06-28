@@ -88,7 +88,7 @@ void CCameraLook::OnActivate( CCameraBase* old_cam )
 
 int cam_dik = DIK_LSHIFT;
 
-Fvector CCameraLook2::m_cam_offset = { 1.6f, 0, 0};
+Fvector CCameraLook2::m_cam_offset = { 0.314f, 0.2f, 0.0f };
 
 void CCameraLook2::OnActivate( CCameraBase* old_cam )
 {
