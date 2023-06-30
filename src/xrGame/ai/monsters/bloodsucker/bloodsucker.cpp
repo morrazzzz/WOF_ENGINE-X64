@@ -635,13 +635,26 @@ void CAI_Bloodsucker::UpdateCL()
 void CAI_Bloodsucker::shedule_Update(u32 dt)
 {
 	inherited::shedule_Update(dt);
-	
-	if (!g_Alive())	
+
+	if (!g_Alive())
 	{
-		setVisible(TRUE);
-		if ( state_invisible )
+		if (IsGameTypeSingle() || OnServer())
 		{
 			stop_invisible_predator();
+			setVisible(TRUE);
+			if (state_invisible)
+			{
+				stop_invisible_predator();
+			}
+		}
+		else // Pavel: MP Client
+		{
+			if (m_visibility_state != full_visibility)
+			{
+				m_visibility_state = full_visibility;
+				manual_deactivate();
+				stop_invisible_predator();
+			}
 		}
 	}
 
@@ -651,7 +664,7 @@ void CAI_Bloodsucker::shedule_Update(u32 dt)
 		return;
 
 	if (!CControlledActor::is_turning() && !m_client_effector) {
-		IKinematics *pK = smart_cast<IKinematics*>(Visual());
+		IKinematics* pK = smart_cast<IKinematics*>(Visual());
 		Fmatrix bone_transform;
 		bone_transform = pK->LL_GetTransform(pK->LL_BoneID("bip01_head"));
 
@@ -774,9 +787,9 @@ void CAI_Bloodsucker::animation_end_jump(CBlend* B)
 void CAI_Bloodsucker::predator_start()
 {
 	//if m_predator==false  is_invisible
-	if( m_vis_state!=0 )
+	if (m_vis_state != 0)
 	{
-		if( m_vis_state==1 )
+		if (m_vis_state == 1)
 		{
 			return;
 		}
@@ -785,34 +798,38 @@ void CAI_Bloodsucker::predator_start()
 	if (m_predator)					return;
 
 	cNameVisual_set(m_visual_predator);
-	CDamageManager::reload(*cNameSect(),"damage",pSettings);
+	CDamageManager::reload(*cNameSect(), "damage", pSettings);
 
 	if (IsGameTypeSingle() || OnServer())
 		control().animation().restart();
 	else
 	{
-		MotionID mid;
-		mid.idx = u_last_motion_idx;
-		mid.slot = u_last_motion_slot;
-		if (mid.valid() && u_last_motion_idx != u16(-1) && u_last_motion_slot != u16(-1)) {
-			u_last_motion_idx = NULL;
-			u_last_motion_slot = NULL;
-			ApplyAnimation(mid.idx, mid.slot, u_last_motion_no_loop);
+		if (g_Alive())
+		{
+			MotionID mid;
+			mid.idx = u_last_motion_idx;
+			mid.slot = u_last_motion_slot;
+			if (mid.valid() && u_last_motion_idx != u16(-1) && u_last_motion_slot != u16(-1))
+			{
+				u_last_motion_idx = NULL;
+				u_last_motion_slot = NULL;
+				ApplyAnimation(mid.idx, mid.slot, u_last_motion_no_loop);
+			}
 		}
 	}
-	
-	CParticlesPlayer::StartParticles(invisible_particle_name,Fvector().set(0.0f,0.1f,0.0f),ID());		
-	sound().play					(CAI_Bloodsucker::eChangeVisibility);
 
-	m_predator						= true;
+	CParticlesPlayer::StartParticles(invisible_particle_name, Fvector().set(0.0f, 0.1f, 0.0f), ID());
+	sound().play(CAI_Bloodsucker::eChangeVisibility);
+
+	m_predator = true;
 	//state_invisible				= false;
 }
 
 void CAI_Bloodsucker::predator_stop()
 {
-	if( m_vis_state != 0 )
+	if (m_vis_state != 0)
 	{
-		if( m_vis_state == -1)
+		if (m_vis_state == -1)
 		{
 			return;
 		}
@@ -820,33 +837,37 @@ void CAI_Bloodsucker::predator_stop()
 		m_predator = true;
 	}
 	//if m_predator==true  is_visible
-	if ( !m_predator )
+	if (!m_predator)
 	{
 		return;
 	}
-	
+
 	cNameVisual_set(*m_visual_default);
 	character_physics_support()->in_ChangeVisual();
 
-	CDamageManager::reload(*cNameSect(),"damage",pSettings);
+	CDamageManager::reload(*cNameSect(), "damage", pSettings);
 
 	if (IsGameTypeSingle() || OnServer())
-		control().animation().restart	();
+		control().animation().restart();
 	else
 	{
-		MotionID mid;
-		mid.idx = u_last_motion_idx;
-		mid.slot = u_last_motion_slot;
-		if (mid.valid() && u_last_motion_idx != u16(-1) && u_last_motion_slot != u16(-1)) {
-			u_last_motion_idx = NULL;
-			u_last_motion_slot = NULL;
-			ApplyAnimation(mid.idx, mid.slot, u_last_motion_no_loop);
+		if (g_Alive())
+		{
+			MotionID mid;
+			mid.idx = u_last_motion_idx;
+			mid.slot = u_last_motion_slot;
+			if (mid.valid() && u_last_motion_idx != u16(-1) && u_last_motion_slot != u16(-1))
+			{
+				u_last_motion_idx = NULL;
+				u_last_motion_slot = NULL;
+				ApplyAnimation(mid.idx, mid.slot, u_last_motion_no_loop);
+			}
 		}
 	}
-	
-	CParticlesPlayer::StartParticles(invisible_particle_name,Fvector().set(0.0f,0.1f,0.0f),ID());		
-	sound().play					(CAI_Bloodsucker::eChangeVisibility);
-	m_predator						= false;
+
+	CParticlesPlayer::StartParticles(invisible_particle_name, Fvector().set(0.0f, 0.1f, 0.0f), ID());
+	sound().play(CAI_Bloodsucker::eChangeVisibility);
+	m_predator = false;
 }
 
 void CAI_Bloodsucker::predator_freeze()
