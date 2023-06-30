@@ -229,35 +229,50 @@ IC void	volume_lerp(float& c, float t, float s, float dt)
 #include "..\xrServerEntities\ai_sounds.h"
 BOOL CSoundRender_Emitter::update_culling(float dt)
 {
-	
+	float fAttFactor = 1.0f; //--#SM+#--
+
 	if (b2D)
 	{
-		occluder_volume		= 1.f;
-		fade_volume			+= dt*10.f*(bStopping?-1.f:1.f);
-	}else{
+		occluder_volume = 1.f;
+		fade_volume += dt * 10.f * (bStopping ? -1.f : 1.f);
+	}
+	else {
 		// Check range
-		float	dist		= SoundRender->listener_position().distance_to	(p_source.position);
-		if (dist>p_source.max_distance)										{ smooth_volume = 0; return FALSE; }
+		float	dist = SoundRender->listener_position().distance_to(p_source.position);
+		if (dist > p_source.max_distance) { smooth_volume = 0; return FALSE; }
 
 		// Calc attenuated volume
-		float att			= p_source.min_distance/(psSoundRolloff*dist);	clamp(att,0.f,1.f);
-		float fade_scale	= bStopping||(att*p_source.base_volume*p_source.volume*(owner_data->s_type==st_Effect?psSoundVEffects*psSoundVFactor:psSoundVMusic)<psSoundCull)?-1.f:1.f;
-		fade_volume			+=	dt*10.f*fade_scale;
+		float att = p_source.min_distance / (psSoundRolloff * dist);	clamp(att, 0.f, 1.f);
+		float fade_scale = bStopping || (att * p_source.base_volume * p_source.volume * (owner_data->s_type == st_Effect ? psSoundVEffects * psSoundVFactor : psSoundVMusic) < psSoundCull) ? -1.f : 1.f;
+		fade_volume += dt * 10.f * fade_scale;
 
 		// Update occlusion
-		float occ			= (owner_data->g_type==SOUND_TYPE_WORLD_AMBIENT)?1.0f:SoundRender->get_occlusion	(p_source.position,.2f,occluder);
-		volume_lerp			(occluder_volume,occ,1.f,dt);
-		clamp				(occluder_volume,0.f,1.f);
+		float occ = (owner_data->g_type == SOUND_TYPE_WORLD_AMBIENT) ? 1.0f : SoundRender->get_occlusion(p_source.position, .2f, occluder);
+		volume_lerp(occluder_volume, occ, 1.f, dt);
+		clamp(occluder_volume, 0.f, 1.f);
+
+		// Calc linear fade --#SM+#--
+		// https://www.desmos.com/calculator/lojovfugle
+		float fMinDisDiff = dist - p_source.min_distance;
+		if (fMinDisDiff > 0.0f)
+		{
+			float fMaxDisDiff = p_source.max_distance - p_source.min_distance;
+			fAttFactor = pow(1.0f - (fMinDisDiff / fMaxDisDiff), psSoundLinearFadeFactor);
+		}
 	}
-	clamp				(fade_volume,0.f,1.f);
+	clamp(fade_volume, 0.f, 1.f);
 	// Update smoothing
-	smooth_volume		= .9f*smooth_volume + .1f*(p_source.base_volume*p_source.volume*(owner_data->s_type==st_Effect?psSoundVEffects*psSoundVFactor:psSoundVMusic)*occluder_volume*fade_volume);
-	if (smooth_volume<psSoundCull)							return FALSE;	// allow volume to go up
+	smooth_volume = .9f * smooth_volume + .1f * (p_source.base_volume * p_source.volume * (owner_data->s_type == st_Effect ? psSoundVEffects * psSoundVFactor : psSoundVMusic) * occluder_volume * fade_volume);
+
+	// Add linear fade --#SM+#--
+	smooth_volume *= fAttFactor;
+
+	if (smooth_volume < psSoundCull)							return FALSE;	// allow volume to go up
 	// Here we has enought "PRIORITY" to be soundable
 	// If we are playing already, return OK
 	// --- else check availability of resources
 	if (target)			return	TRUE;
-	else				return	SoundRender->i_allow_play	(this);
+	else				return	SoundRender->i_allow_play(this);
 }
 
 float CSoundRender_Emitter::priority()

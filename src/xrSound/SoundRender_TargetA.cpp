@@ -148,7 +148,8 @@ void	CSoundRender_TargetA::fill_parameters()
 	A_CHK(alSourcef	(pSource, AL_ROLLOFF_FACTOR,		psSoundRolloff));
 
 	VERIFY2(m_pEmitter,SE->source()->file_name());
-    float	_gain	= m_pEmitter->smooth_volume;			clamp	(_gain,EPS_S,1.f);
+    float _pitch = m_pEmitter->p_source.freq * psSoundTimeFactor; //--#SM+#-- Correct sound "speed" by time factor
+    clamp(_pitch, EPS_L, 100.f); //--#SM+#-- Increase sound frequancy (speed) limit 
     if (!fsimilar(_gain,cache_gain, 0.01f))
 	{
         cache_gain	= _gain;

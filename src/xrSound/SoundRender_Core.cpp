@@ -28,6 +28,10 @@ float	psSoundVRecorder = 1.f;
 int		psSoundRecorderMode = 1;
 int		psSoundRecorderDenoise = 1;
 
+float 	psSoundTimeFactor = 1.0f; //--#SM+#--
+float 	psSoundLinearFadeFactor = 0.4f; //--#SM+#--
+
+
 CSoundRender_Core*				SoundRender = 0;
 CSound_manager_interface*		Sound		= 0;
 
