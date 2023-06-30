@@ -3,6 +3,7 @@
 
 #include "soundrender_coreA.h"
 #include "soundrender_targetA.h"
+#include "SoundVoiceChat.h"
 
 CSoundRender_CoreA*	SoundRenderA= 0; 
 
@@ -75,92 +76,103 @@ void  CSoundRender_CoreA::_restart()
 
 void CSoundRender_CoreA::_initialize(int stage)
 {
-	if(stage==0)
+	if (stage == 0)
 	{
-		pDeviceList					= xr_new<ALDeviceList>();
+		pDeviceList = xr_new<ALDeviceList>();
 
-		if (0==pDeviceList->GetNumDevices())
-		{ 
-			CHECK_OR_EXIT			(0,"OpenAL: Can't create sound device.");
-			xr_delete				(pDeviceList);
+		if (0 == pDeviceList->GetNumDevices())
+		{
+			CHECK_OR_EXIT(0, "OpenAL: Can't create sound device.");
+			xr_delete(pDeviceList);
 		}
 		return;
 	}
-	
-	pDeviceList->SelectBestDevice	();
-	R_ASSERT						(snd_device_id>=0 && snd_device_id<pDeviceList->GetNumDevices());
-	const ALDeviceDesc& deviceDesc	= pDeviceList->GetDeviceDesc(snd_device_id);
-    // OpenAL device
-    pDevice						= alcOpenDevice		(deviceDesc.name);
+
+	pDeviceList->SelectBestDevice();
+	R_ASSERT(snd_device_id >= 0 && snd_device_id < pDeviceList->GetNumDevices());
+	const ALDeviceDesc& deviceDesc = pDeviceList->GetDeviceDesc(snd_device_id);
+	// OpenAL device
+	pDevice = alcOpenDevice(deviceDesc.name);
 	if (pDevice == NULL)
 	{
-		CHECK_OR_EXIT			(0,"SOUND: OpenAL: Failed to create device.");
-		bPresent				= FALSE;
+		CHECK_OR_EXIT(0, "SOUND: OpenAL: Failed to create device.");
+		bPresent = FALSE;
 		return;
 	}
 
-    // Get the device specifier.
-    const ALCchar*		        deviceSpecifier;
-    deviceSpecifier         	= alcGetString		(pDevice, ALC_DEVICE_SPECIFIER);
+	// Get the device specifier.
+	const ALCchar* deviceSpecifier;
+	deviceSpecifier = alcGetString(pDevice, ALC_DEVICE_SPECIFIER);
 
-    // Create context
-    pContext					= alcCreateContext	(pDevice,NULL);
-	if (0==pContext){
-		CHECK_OR_EXIT			(0,"SOUND: OpenAL: Failed to create context.");
-		bPresent				= FALSE;
-		alcCloseDevice			(pDevice); pDevice = 0;
+	// Create context
+	pContext = alcCreateContext(pDevice, NULL);
+	if (0 == pContext) {
+		CHECK_OR_EXIT(0, "SOUND: OpenAL: Failed to create context.");
+		bPresent = FALSE;
+		alcCloseDevice(pDevice); pDevice = 0;
 		return;
 	}
-    
-    // clear errors
-	alGetError					();
-	alcGetError					(pDevice);
-    
-    // Set active context
-    AC_CHK				        (alcMakeContextCurrent(pContext));
 
-    // initialize listener
-    A_CHK				        (alListener3f		(AL_POSITION,0.f,0.f,0.f));
-    A_CHK				        (alListener3f		(AL_VELOCITY,0.f,0.f,0.f));
-    Fvector	orient[2]	        = {{0.f,0.f,1.f},{0.f,1.f,0.f}};
-    A_CHK				        (alListenerfv		(AL_ORIENTATION,&orient[0].x));
-    A_CHK				        (alListenerf		(AL_GAIN,1.f));
+	// clear errors
+	alGetError();
+	alcGetError(pDevice);
 
-    // Check for EAX extension
-    bEAX 				        = deviceDesc.props.eax && !deviceDesc.props.eax_unwanted;
+	// Set active context
+	AC_CHK(alcMakeContextCurrent(pContext));
 
-    eaxSet 				        = (EAXSet)alGetProcAddress	((const ALchar*)"EAXSet");
-    if (eaxSet==NULL) bEAX 		= false;
-    eaxGet 				        = (EAXGet)alGetProcAddress	((const ALchar*)"EAXGet");
-    if (eaxGet==NULL) bEAX 		= false;
+	// initialize listener
+	A_CHK(alListener3f(AL_POSITION, 0.f, 0.f, 0.f));
+	A_CHK(alListener3f(AL_VELOCITY, 0.f, 0.f, 0.f));
+	Fvector	orient[2] = { {0.f,0.f,1.f},{0.f,1.f,0.f} };
+	A_CHK(alListenerfv(AL_ORIENTATION, &orient[0].x));
+	A_CHK(alListenerf(AL_GAIN, 1.f));
 
-    if (bEAX)
+	// Check for EAX extension
+	bEAX = deviceDesc.props.eax && !deviceDesc.props.eax_unwanted;
+
+	eaxSet = (EAXSet)alGetProcAddress((const ALchar*)"EAXSet");
+	if (eaxSet == NULL) bEAX = false;
+	eaxGet = (EAXGet)alGetProcAddress((const ALchar*)"EAXGet");
+	if (eaxGet == NULL) bEAX = false;
+
+	if (bEAX)
 	{
-		bDeferredEAX			= EAXTestSupport(TRUE);
-        bEAX 					= EAXTestSupport(FALSE);
-    }
+		bDeferredEAX = EAXTestSupport(TRUE);
+		bEAX = EAXTestSupport(FALSE);
+	}
 
-    inherited::_initialize		(stage);
+	inherited::_initialize(stage);
 
-	if(stage==1)//first initialize
+	if (stage == 1)//first initialize
 	{
 		// Pre-create targets
-		CSoundRender_Target*	T	= 0;
-		for (u32 tit=0; tit<u32(psSoundTargets); tit++)
+		CSoundRender_Target* T = 0;
+		for (u32 tit = 0; tit < u32(psSoundTargets); tit++)
 		{
-			T						=	xr_new<CSoundRender_TargetA>();
+			T = xr_new<CSoundRender_TargetA>();
 			if (T->_initialize())
 			{
-				s_targets.push_back	(T);
-			}else
+				s_targets.push_back(T);
+			}
+			else
 			{
-        		Log					("! SOUND: OpenAL: Max targets - ",tit);
-				T->_destroy			();
-        		xr_delete			(T);
-        		break;
+				Log("! SOUND: OpenAL: Max targets - ", tit);
+				T->_destroy();
+				xr_delete(T);
+				break;
 			}
 		}
+
+		pSoundVoiceChat = xr_new<SoundVoiceChat>(pContext);
 	}
+}
+
+void CSoundRender_CoreA::update(const Fvector& P, const Fvector& D, const Fvector& N)
+{
+	inherited::update(P, D, N);
+
+	if (pSoundVoiceChat)
+		pSoundVoiceChat->Update(P, D, N);
 }
 
 void CSoundRender_CoreA::set_master_volume(float f )
@@ -173,6 +185,9 @@ void CSoundRender_CoreA::set_master_volume(float f )
 void CSoundRender_CoreA::_clear	()
 {
 	inherited::_clear			();
+
+	xr_delete(pSoundVoiceChat);
+
     // remove targets
 	CSoundRender_Target*	T	= 0;
 	for (u32 tit=0; tit<s_targets.size(); tit++)

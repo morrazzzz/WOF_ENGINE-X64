@@ -2524,6 +2524,9 @@
     <Filter Include="UI\Common\PDA\CHAT">
       <UniqueIdentifier>{d0aa3575-0864-47bd-ba3e-27f5150194f0}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Core\Client\VoiceChat">
+      <UniqueIdentifier>{f9aa065b-9353-4393-aeab-68b7d03896e0}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="mt_config.h">
@@ -7455,6 +7458,12 @@
     <ClInclude Include="InertionData.h">
       <Filter>Core\Client\Objects\items &amp; weapons\Weapons\Custom Weapon</Filter>
     </ClInclude>
+    <ClInclude Include="VoiceChat.h">
+      <Filter>Core\Client\VoiceChat</Filter>
+    </ClInclude>
+    <ClInclude Include="VoiceSender.h">
+      <Filter>Core\Client\VoiceChat</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="damage_manager.cpp">
@@ -11158,6 +11167,12 @@
     </ClCompile>
     <ClCompile Include="UIPda_Chat.cpp">
       <Filter>UI\Common\PDA\CHAT</Filter>
+    </ClCompile>
+    <ClCompile Include="VoiceChat.cpp">
+      <Filter>Core\Client\VoiceChat</Filter>
+    </ClCompile>
+    <ClCompile Include="VoiceSender.cpp">
+      <Filter>Core\Client\VoiceChat</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

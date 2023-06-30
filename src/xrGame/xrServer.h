@@ -235,6 +235,7 @@ protected:
 
 	void					SendConnectionData		(IClient* CL);
 	void					OnChatMessage			(NET_Packet* P, xrClientData* CL);
+	void					OnVoiceMessage(NET_Packet& P, ClientID sender);
 	void					OnProcessClientMapData	(NET_Packet& P, ClientID const & clientID);
 
 private:

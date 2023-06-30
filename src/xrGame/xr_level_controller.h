@@ -55,6 +55,8 @@ enum	EGameActions
 	kSCORES,
 	kCHAT,
 	kCHAT_TEAM,
+	kVOICE_CHAT,
+	kVOICE_DISTANCE,
 	kSCREENSHOT,
 	kQUIT,
 	kCONSOLE,

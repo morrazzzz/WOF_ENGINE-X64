@@ -133,6 +133,8 @@ public:
 	
 	virtual void		HideShownDialogs		();
 
+	bool HasShownDialogs() const;
+
 	SDrawStaticStruct*	AddCustomStatic			(LPCSTR id, bool bSingleInstance);
 	SDrawStaticStruct*	GetCustomStatic			(LPCSTR id);
 	void				RemoveCustomStatic		(LPCSTR id);
