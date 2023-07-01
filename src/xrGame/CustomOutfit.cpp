@@ -101,6 +101,15 @@ void CCustomOutfit::Load(LPCSTR section)
 	else
 		m_ActorVisual = NULL;
 
+	if (pSettings->line_exist(section, "actor_icon"))
+	{
+		m_ActorIconName = pSettings->r_string(section, "actor_icon");
+	}
+	else
+	{
+		m_ActorIconName = NULL;
+	}
+
 	m_ef_equipment_type		= pSettings->r_u32(section,"ef_equipment_type");
 	m_fPowerLoss			= READ_IF_EXISTS(pSettings, r_float, section, "power_loss",    1.0f );
 	clamp					( m_fPowerLoss, 0.0f, 1.0f );
@@ -262,12 +271,16 @@ void CCustomOutfit::ApplySkinModel(CActor* pActor, bool bDress, bool bHUDOnly)
 				NewVisual = m_ActorVisual;
 
 			pActor->ChangeVisual(NewVisual);
+			if (m_ActorIconName.size())
+				pActor->cast_inventory_owner()->SetIconName(m_ActorIconName);
+
 		}
 
 
 		if (pActor == Level().CurrentViewEntity())	
 			g_player_hud->load(pSettings->r_string(cNameSect(),"player_hud_section"));
-	}else
+	}
+	else
 	{
 		if (!bHUDOnly && m_ActorVisual.size())
 		{

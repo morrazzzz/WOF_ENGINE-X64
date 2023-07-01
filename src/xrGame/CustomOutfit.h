@@ -33,6 +33,7 @@ protected:
 	HitImmunity::HitTypeSVec		m_HitTypeProtection;
 
 	shared_str				m_ActorVisual;
+	shared_str				m_ActorIconName;
 	shared_str				m_full_icon_name;
 	SBoneProtections*		m_boneProtection;	
 protected:

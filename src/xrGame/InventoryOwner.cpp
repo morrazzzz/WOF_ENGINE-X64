@@ -437,6 +437,10 @@ LPCSTR	CInventoryOwner::IconName () const
 	return CharacterInfo().IconName().c_str();
 }
 
+void CInventoryOwner::SetIconName(shared_str name)
+{
+	CharacterInfo().SetIconName(name);
+}
 
 void CInventoryOwner::NewPdaContact		(CInventoryOwner* pInvOwner)
 {

@@ -160,6 +160,8 @@ void CCharacterInfo::SetCommunity(CHARACTER_COMMUNITY_INDEX community)
 const shared_str& CCharacterInfo::IconName() const
 {
 	R_ASSERT(m_SpecificCharacterId.size());
+	if (icon_name.size())
+		return icon_name;
 	return m_SpecificCharacter.IconName();
 }
 

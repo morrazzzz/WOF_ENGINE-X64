@@ -102,6 +102,7 @@ protected:
 
 public:
 
+	shared_str icon_name;
 
 #ifdef XRGAME_EXPORTS
 	shared_str					Profile()			const;
