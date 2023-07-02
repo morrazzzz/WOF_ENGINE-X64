@@ -48,6 +48,11 @@ void CUIActorMenu::InitInventoryMode()
 	m_pInventoryDetectorList->Show		(true);
 	m_pInventoryPistolList->Show		(true);
 	m_pInventoryAutomaticList->Show		(true);
+	m_pInventoryKnifeList->Show			(true);
+	m_pInventoryBinocularList->Show		(true);
+	m_pInventoryBoltList->Show			(true);
+	m_pInventoryPdaList->Show			(true);
+	m_pInventoryTorchList->Show			(true);
 	m_pInventoryBackpack->Show			(true);
 
 	m_pQuickSlot->Show					(true);
@@ -243,6 +248,11 @@ void CUIActorMenu::OnInventoryAction(PIItem pItem, u16 action_type)
 		m_pInventoryOutfitList,
 		m_pInventoryHelmetList,
 		m_pInventoryDetectorList,
+		m_pInventoryKnifeList,
+		m_pInventoryBinocularList,
+		m_pInventoryBoltList,
+		m_pInventoryPdaList,
+		m_pInventoryTorchList,
 		m_pInventoryBackpack,
 
 		m_pInventoryBagList,
@@ -414,6 +424,7 @@ void CUIActorMenu::InitCellForSlot( u16 slot_idx )
 	//CCustomOutfit* outfit = smart_cast<CCustomOutfit*>(item);
 	//if(outfit)
 	//	outfit->ReloadBonesProtection();
+	//	outfit->ReloadBonesProtection();
 
 	//CHelmet* helmet = smart_cast<CHelmet*>(item);
 	//if(helmet)
@@ -435,6 +446,11 @@ void CUIActorMenu::InitInventoryContents(CUIDragDropListEx* pBagList)
 	InitCellForSlot				(DETECTOR_SLOT);
 	InitCellForSlot				(GRENADE_SLOT);
 	InitCellForSlot				(HELMET_SLOT);
+	InitCellForSlot				(KNIFE_SLOT);
+	InitCellForSlot				(BINOCULAR_SLOT);
+	InitCellForSlot				(BOLT_SLOT);
+	InitCellForSlot				(PDA_SLOT);
+	InitCellForSlot				(TORCH_SLOT);
 	InitCellForSlot				(BACKPACK_SLOT);
 
 	curr_list					= m_pInventoryBeltList;
@@ -736,6 +752,26 @@ CUIDragDropListEx* CUIActorMenu::GetSlotList(u16 slot_idx)
 
 		case DETECTOR_SLOT:
 			return m_pInventoryDetectorList;
+			break;
+
+		case KNIFE_SLOT:                           
+			return m_pInventoryKnifeList;
+			break;
+
+		case BINOCULAR_SLOT:                      
+			return m_pInventoryBinocularList;
+			break;
+
+		case BOLT_SLOT:                           
+			return m_pInventoryBoltList;
+			break;
+
+		case PDA_SLOT:                         
+			return m_pInventoryPdaList;
+			break;
+
+		case TORCH_SLOT:                          
+			return m_pInventoryTorchList;
 			break;
 		
 		case BACKPACK_SLOT:

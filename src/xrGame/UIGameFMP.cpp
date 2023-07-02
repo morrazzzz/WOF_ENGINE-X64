@@ -11,6 +11,9 @@
 #include "ui/UIXmlInit.h"
 #include "UI_AnimMode.h"
 
+#include "Inventory.h"
+#include "PDA.h"
+
 BOOL g_cl_draw_mp_statistic = FALSE;
 
 CUIGameFMP::CUIGameFMP()
