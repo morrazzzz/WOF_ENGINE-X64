@@ -36,58 +36,61 @@ CPhysicObject::~CPhysicObject(void)
 
 BOOL CPhysicObject::net_Spawn(CSE_Abstract* DC)
 {
-	CSE_Abstract			*e	= (CSE_Abstract*)(DC);
-	CSE_ALifeObjectPhysic	*po	= smart_cast<CSE_ALifeObjectPhysic*>(e);
-	R_ASSERT				(po);
-	m_type					= EPOType(po->type);
-	m_mass					= po->mass;
-	m_collision_hit_callback= NULL;
-	m_anim_blend			= 0;
-	inherited::net_Spawn	( DC );
+	CSE_Abstract* e = (CSE_Abstract*)(DC);
+	CSE_ALifeObjectPhysic* po = smart_cast<CSE_ALifeObjectPhysic*>(e);
+	R_ASSERT(po);
+	m_type = EPOType(po->type);
+	m_mass = po->mass;
+	m_collision_hit_callback = NULL;
+	m_anim_blend = 0;
+	inherited::net_Spawn(DC);
 
-	create_collision_model  ( );
+	create_collision_model();
 
 
 	CPHSkeleton::Spawn(e);
 	setVisible(TRUE);
 	setEnabled(TRUE);
 
-	if (!PPhysicsShell()->isBreakable()&&!CScriptBinder::object()&&!CPHSkeleton::IsRemoving())
+	if (!PPhysicsShell()->isBreakable() && !CScriptBinder::object() && !CPHSkeleton::IsRemoving())
 		SheduleUnregister();
 
 	//if (PPhysicsShell()->Animated())
 	//{
 	//	processing_activate();
 	//}
-	bones_snd_player = create_moving_bones_snd_player( *this );
-	if( bones_snd_player )
-						play_bones_sound();
+	bones_snd_player = create_moving_bones_snd_player(*this);
+	if (bones_snd_player)
+		play_bones_sound();
 
-	m_just_after_spawn		= true;
-	m_activated				= false;
+	m_just_after_spawn = true;
+	m_activated = false;
 
 	if (DC->s_flags.is(M_SPAWN_UPDATE)) {
 		NET_Packet				temp;
-		temp.B.count			= 0;
-		DC->UPDATE_Write			(temp);
+		temp.B.count = 0;
+		DC->UPDATE_Write(temp);
 		if (temp.B.count > 0)
 		{
-			temp.r_seek			(0);
-			net_Import			(temp);
+			temp.r_seek(0);
+			net_Import(temp);
 		}
 	}
 	//processing_activate();
 #ifdef	DEBUG
-if(dbg_draw_doors)
-{
-	DBG_OpenCashedDraw( );
-	Fvector closed, open; 
-	get_door_vectors( closed, open );
-	DBG_ClosedCashedDraw( 50000000 );
-}
+	if (dbg_draw_doors)
+	{
+		DBG_OpenCashedDraw();
+		Fvector closed, open;
+		get_door_vectors(closed, open);
+		DBG_ClosedCashedDraw(50000000);
+	}
 #endif	
-	return TRUE;
+	PHObjectPositionUpdate();
 
+	PPhysicsShell()->applyImpulse(Fvector().set(0.f, -1.0f, 0.f), 0.5f * PPhysicsShell()->getMass());
+
+	return TRUE;
 }
 void CPhysicObject::create_collision_model			( )
 {
