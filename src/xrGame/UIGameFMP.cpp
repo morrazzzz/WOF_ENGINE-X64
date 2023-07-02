@@ -166,6 +166,7 @@ bool CUIGameFMP::IR_UIOnKeyboardPress(int dik)
 		case kACTIVE_JOBS:
 			{
 				if (!pActor->inventory_disabled())
+					if (pActor->GetPDA())
 					ShowPdaMenu();			
 			} break;
 		case kINVENTORY:
