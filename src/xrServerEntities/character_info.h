@@ -122,6 +122,8 @@ protected:
 	void						SetReputation		(CHARACTER_REPUTATION_VALUE		reputation);
 	void						SetCommunity		(CHARACTER_COMMUNITY_INDEX		community);
 
+	void						SetIconName(shared_str name) { icon_name = name; }
+
 public:
 	const shared_str&			IconName			()	const;
 
