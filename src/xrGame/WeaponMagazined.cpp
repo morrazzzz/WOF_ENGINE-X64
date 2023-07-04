@@ -835,7 +835,7 @@ void CWeaponMagazined::switch2_Unmis()
 		else if (m_sounds.FindSoundItem("sndReloadEmpty", false) && psWpnAnimsFlag.test(ANM_RELOAD_EMPTY))
 			PlaySound("sndReloadEmpty", get_LastFP());
 		else
-			PlaySound("sndReload", get_LastFP());
+			PlayReloadSound();
 	}
 
 	if (psWpnAnimsFlag.test(ANM_MISFIRE))
@@ -843,7 +843,7 @@ void CWeaponMagazined::switch2_Unmis()
 	else if (psWpnAnimsFlag.test(ANM_RELOAD_EMPTY))
 		PlayHUDMotion("anm_reload_empty", TRUE, this, GetState());
 	else
-		PlayHUDMotion("anm_reload", TRUE, this, GetState());
+		PlayAnimReload();
 }
 
 void CWeaponMagazined::switch2_Hidden()
