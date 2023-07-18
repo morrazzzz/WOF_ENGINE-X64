@@ -113,23 +113,3 @@ bool CEatableItem::UseBy (CEntityAlive* entity_alive)
 
 	return true;
 }
-
-u32 CEatableItem::Cost() const
-{
-	u32 res = inherited::Cost();
-	int percent = (m_iPortionsNum * 100) / m_iConstPortions;
-
-	res = (res * percent) / 100;
-
-	return res;
-}
-
-float CEatableItem::Weight() const
-{
-	float res = inherited::Weight();
-	int percent = (m_iPortionsNum * 100) / m_iConstPortions;
-
-	res = (res * percent) / 100;
-
-	return res;
-}

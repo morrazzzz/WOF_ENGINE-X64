@@ -26,12 +26,9 @@ public:
 	virtual void			OnH_B_Independent			(bool just_before_destroy);
 	virtual void			OnH_A_Independent			();
 	virtual	bool			UseBy						(CEntityAlive* npc);
-	u32 Cost() const;
-	float Weight() const;
 	virtual	bool			Empty						()						{return PortionsNum()==0;};
 			int				PortionsNum					()	const				{return m_iPortionsNum;}
 protected:	
 	int						m_iPortionsNum;
-	u32						m_iConstPortions;
 };
 
