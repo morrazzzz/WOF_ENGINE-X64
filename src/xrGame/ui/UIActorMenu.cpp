@@ -346,7 +346,7 @@ EDDListType CUIActorMenu::GetListType(CUIDragDropListEx* l)
 	if(l==m_pQuickSlot)					return iQuickSlot;
 	if(l==m_pTrashList)					return iTrashSlot;
 
-	if (l == m_pInventoryBackpack)		return iActorSlot;
+	if (l==m_pInventoryBackpack)		return iActorSlot;
 
 	R_ASSERT(0);
 	
@@ -564,7 +564,7 @@ void CUIActorMenu::highlight_item_slot(CUICellItem* cell_item)
 	CCustomDetector* detector = smart_cast<CCustomDetector*>(item);
 	CEatableItem* eatable = smart_cast<CEatableItem*>(item);
 	CArtefact* artefact = smart_cast<CArtefact*>(item);
-	CActorBackpack* backpack = dynamic_cast<CActorBackpack*>(item);
+	CActorBackpack* backpack = smart_cast<CActorBackpack*>(item);
 
 	if (backpack)
 	{
