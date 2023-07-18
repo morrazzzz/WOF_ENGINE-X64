@@ -839,7 +839,13 @@ void CWeaponMagazined::switch2_Unmis()
 	}
 
 	if (psWpnAnimsFlag.test(ANM_MISFIRE))
+	{
 		PlayHUDMotion("anm_reload_misfire", TRUE, this, GetState());
+		// Shell Drop
+		Fvector vel;
+		PHGetLinearVell(vel);
+		OnShellDrop(get_LastSP(), vel);
+	}
 	else if (psWpnAnimsFlag.test(ANM_RELOAD_EMPTY))
 		PlayHUDMotion("anm_reload_empty", TRUE, this, GetState());
 	else
