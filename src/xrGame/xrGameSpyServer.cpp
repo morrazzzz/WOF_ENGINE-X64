@@ -78,7 +78,7 @@ xrGameSpyServer::EConnect xrGameSpyServer::Connect(shared_str &session_name, Gam
 	
 
 	m_iReportToMasterServer = game->get_option_i		(*session_name,"public",0);
-	m_iMaxPlayers	= game->get_option_i		(*session_name,"maxplayers",32);
+	m_iMaxPlayers	= game->get_option_i		(*session_name,"maxplayers",63);
 //	m_bCheckCDKey = game->get_option_i		(*session_name,"cdkey",0) != 0;
 	m_bCheckCDKey = game->get_option_i		(*session_name,"public",0) != 0;
 	//--------------------------------------------//

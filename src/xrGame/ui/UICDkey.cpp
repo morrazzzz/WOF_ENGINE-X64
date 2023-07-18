@@ -213,17 +213,17 @@ void CUIMPPlayerName::OnFocusLost()
 void GetCDKey_FromRegistry(char* cdkey)
 {
 	ReadRegistry_StrValue(REGISTRY_VALUE_GSCDKEY, cdkey);
-	if ( xr_strlen(cdkey) > 64 )
+	if ( xr_strlen(cdkey) > 128 )
 	{
-		cdkey[64] = 0;
+		cdkey[128] = 0;
 	}
 }
 
 void WriteCDKey_ToRegistry(LPSTR cdkey)
 {
-	if ( xr_strlen(cdkey) > 64 )
+	if ( xr_strlen(cdkey) > 128 )
 	{
-		cdkey[64] = 0;
+		cdkey[128] = 0;
 	}
 	WriteRegistry_StrValue(REGISTRY_VALUE_GSCDKEY, cdkey);
 }

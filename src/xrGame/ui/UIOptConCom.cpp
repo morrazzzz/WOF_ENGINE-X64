@@ -18,7 +18,7 @@ xr_token g_GameModes	[] = {
 	{ "st_artefacthunt",			eGameIDArtefactHunt			},
 	{ "st_capture_the_artefact",	eGameIDCaptureTheArtefact	},
 	{ "st_freemp",					eGameIDFreeMp				},
-	{ "st_roleplay",					eGameIDRolePlay				},
+	{ "st_roleplay",				eGameIDRolePlay				},
 	{ 0,							0							}
 };
 
@@ -50,18 +50,18 @@ public:
 void CUIOptConCom::Init()
 {
 	ReadPlayerNameFromRegistry();
-	CMD3(CCC_UserName,	"mm_net_player_name", m_playerName,	64);
+	CMD3(CCC_UserName,	"mm_net_player_name", m_playerName,	128);
 
-	m_iMaxPlayers		= 32;
+	m_iMaxPlayers		= 63;
 	m_curGameMode		= eGameIDDeathmatch;
-	CMD4(CCC_Integer,	"mm_net_srv_maxplayers",			&m_iMaxPlayers,	2, 32);
+	CMD4(CCC_Integer,	"mm_net_srv_maxplayers",			&m_iMaxPlayers,	2, 63);
 	CMD3(CCC_Token,		"mm_net_srv_gamemode",				&m_curGameMode,	g_GameModes);
 	m_uNetSrvParams.zero();
 	CMD3(CCC_Mask,		"mm_mm_net_srv_dedicated",			&m_uNetSrvParams,	flNetSrvDedicated);
 	CMD3(CCC_Mask,		"mm_net_con_publicserver",			&m_uNetSrvParams,	flNetConPublicServer);
 	CMD3(CCC_Mask,		"mm_net_con_spectator_on",			&m_uNetSrvParams,	flNetConSpectatorOn);
 	m_iNetConSpectator	= 20;
-	CMD4(CCC_Integer,	"mm_net_con_spectator",				&m_iNetConSpectator, 1, 32);
+	CMD4(CCC_Integer,	"mm_net_con_spectator",				&m_iNetConSpectator, 1, 63);
 
 	m_iReinforcementType = 1;
 	CMD4(CCC_Integer,	"mm_net_srv_reinforcement_type",	&m_iReinforcementType, 0, 2 );

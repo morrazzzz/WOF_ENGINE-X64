@@ -350,7 +350,7 @@ void	CGameSpy_Browser::ReadServerInfo	(ServerInfo* pServerInfo, void* pServer)
 	pServerInfo->m_bUserPass	= xrGS_SBServerGetBoolValueA(pServer, m_pQR2->xrGS_RegisteredKey(G_USER_PASSWORD_KEY), SBFalse) == SBTrue;
 	pServerInfo->m_Ping = (s16)(xrGS_SBServerGetPing(pServer) & 0xffff);
 	pServerInfo->m_ServerNumPlayers = (s16)xrGS_SBServerGetIntValueA(pServer, m_pQR2->xrGS_RegisteredKey(NUMPLAYERS_KEY), 0);
-	pServerInfo->m_ServerMaxPlayers = (s16)xrGS_SBServerGetIntValueA(pServer, m_pQR2->xrGS_RegisteredKey(MAXPLAYERS_KEY), 32);
+	pServerInfo->m_ServerMaxPlayers = (s16)xrGS_SBServerGetIntValueA(pServer, m_pQR2->xrGS_RegisteredKey(MAXPLAYERS_KEY), 63);
 	xr_sprintf(pServerInfo->m_ServerUpTime, "%s", xrGS_SBServerGetStringValueA(pServer, m_pQR2->xrGS_RegisteredKey(SERVER_UP_TIME_KEY), "Unknown"));
 	pServerInfo->m_ServerNumTeams = (s16)xrGS_SBServerGetIntValueA(pServer, m_pQR2->xrGS_RegisteredKey(NUMTEAMS_KEY), 0);
 	pServerInfo->m_Port		= (s16)xrGS_SBServerGetIntValueA(pServer, m_pQR2->xrGS_RegisteredKey(HOSTPORT_KEY), 0);
