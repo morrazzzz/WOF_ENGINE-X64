@@ -25,10 +25,10 @@ struct CraftSystemItem
 	shared_str section;
 };
 
-#define MAX_INGRIDIENT 3
+#define MAX_INGRIDIENT 8
 class ItemCraftPannel : public CUIWindow
 {
-	char* array_items_current[MAX_INGRIDIENT] = { "static_craft_item_1", "static_craft_item_2","static_craft_item_3" };
+	char* array_items_current[MAX_INGRIDIENT] = { "static_craft_item_1", "static_craft_item_2","static_craft_item_3", "static_craft_item_4", "static_craft_item_5", "static_craft_item_6", "static_craft_item_7", "static_craft_item_8" };
 
 
 public:
