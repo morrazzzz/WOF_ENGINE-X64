@@ -832,9 +832,8 @@ void CWeaponMagazined::switch2_Unmis()
 	{
 		if (m_sounds.FindSoundItem("sndReloadMisfire", false) && psWpnAnimsFlag.test(ANM_MISFIRE))
 			PlaySound("sndReloadMisfire", get_LastFP());
-		else if (m_sounds.FindSoundItem("sndReloadEmpty", false) && psWpnAnimsFlag.test(ANM_RELOAD_EMPTY))
-			PlaySound("sndReloadEmpty", get_LastFP());
-		else
+		else if (m_sounds.FindSoundItem("sndReloadJammed", false) && isHUDAnimationExist("anm_reload_jammed"))
+			PlaySound("sndReloadJammed", get_LastFP());
 			PlayReloadSound();
 	}
 
@@ -846,8 +845,6 @@ void CWeaponMagazined::switch2_Unmis()
 		PHGetLinearVell(vel);
 		OnShellDrop(get_LastSP(), vel);
 	}
-	else if (psWpnAnimsFlag.test(ANM_RELOAD_EMPTY))
-		PlayHUDMotion("anm_reload_empty", TRUE, this, GetState());
 	else
 		PlayAnimReload();
 }
