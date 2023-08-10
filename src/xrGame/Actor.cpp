@@ -949,13 +949,20 @@ void CActor::Die	(CObject* who)
 		CurrentGameUI()->HideShownDialogs();
 	}
 
-	if	(IsGameTypeSingle())
+	if (IsGameTypeSingle())
 	{
-		cam_Set				(eacFreeLook);
-		start_tutorial		("game_over");
-	} else
-	{
-		cam_Set				(eacFixedLookAt);
+		pcstr m_sDeathCamera = READ_IF_EXISTS(pSettings, r_string, "gameplay", "death_camera_mode", "freelook");
+
+		if (xr_strcmp("freelook", m_sDeathCamera) == 0)
+			cam_Set(eacFreeLook);
+		else if (xr_strcmp("fixedlook", m_sDeathCamera) == 0)
+			cam_Set(eacFixedLookAt);
+		else if (xr_strcmp("firsteye", m_sDeathCamera) == 0)
+			cam_Set(eacFirstEye);
+
+		CurrentGameUI()->HideShownDialogs();
+
+		start_tutorial("game_over");
 	}
 	
 	mstate_wishful	&=		~mcAnyMove;
