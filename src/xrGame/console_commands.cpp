@@ -58,6 +58,14 @@
 #	include "CharacterPhysicsSupport.h"
 #endif // DEBUG
 
+extern u32	death_camera_mode;
+xr_token							death_camera_mode_token[] = {
+	{ "freelook",					1												},
+	{ "fixedlook",					2												},
+	{ "firsteye",					3												},
+	{ 0,							0												}
+};
+
 string_path		g_last_saved_game;
 
 #ifdef DEBUG
@@ -2261,6 +2269,8 @@ extern BOOL dbg_moving_bones_snd_player;
 	CMD3(CCC_String,    "slot_1",				g_quick_use_slots[1], 32);
 	CMD3(CCC_String,    "slot_2",				g_quick_use_slots[2], 32);
 	CMD3(CCC_String,    "slot_3",				g_quick_use_slots[3], 32);
+
+	CMD3(CCC_Token, "g_death_cam_mode", &death_camera_mode, death_camera_mode_token);
 
 	CMD4(CCC_Integer,	"keypress_on_start",	&g_keypress_on_start, 0, 1);
 	register_mp_console_commands				();
