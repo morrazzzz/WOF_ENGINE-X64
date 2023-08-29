@@ -173,10 +173,7 @@ void			ISpatial_DB::initialize(Fbox& BB)
 		Fvector bbc,bbd;
 		BB.get_CD				(bbc,bbd);
 
-		bbc.set					(0,0,0);			// generic
-		bbd.set					(1024,1024,1024);	// generic
-
-		allocator_pool.reserve	(128);
+		allocator_pool.reserve	(256);
 		m_center.set			(bbc);
 		m_bounds				= _max(_max(bbd.x,bbd.y),bbd.z);
 		rt_insert_object		= NULL;
