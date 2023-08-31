@@ -11,20 +11,20 @@
 	#define	GAMESPY_GAMENAME				"stalkercoppc"
 	#define GAMESPY_GAMEID					2760
 	#define GAMESPY_PRODUCTID				11994
-	#define GAME_VERSION					"1.6.02"
+	#define GAME_VERSION					"0.1.0"
 	#define REGISTRY_PATH					"Software\\GSC Game World\\STALKER-COP_DBG\\"
 #else
 	#define	GAMESPY_GAMENAME				"stalkercoppc"
-	#define GAMESPY_GAMEID					2760
-	#define GAMESPY_PRODUCTID				11994
-	#define GAME_VERSION					"1.6.02"
+	#define GAMESPY_GAMEID					2761
+	#define GAMESPY_PRODUCTID				12687
+	#define GAME_VERSION					"0.1.0"
 	#define REGISTRY_PATH					"Software\\GSC Game World\\STALKER-COP\\"
 #endif
 
 #define GAMESPY_GP_NAMESPACE_ID				1 /*gamespy global namespace*/
 
 #define	GAMESPY_QR2_BASEPORT				5445
-#define GAMESPY_BROWSER_MAX_UPDATES			20
+#define GAMESPY_BROWSER_MAX_UPDATES			40
 
 #define START_PORT							0
 #define END_PORT							65535
@@ -44,7 +44,7 @@
 #define REGISTRY_VALUE_USERPASSWORD			"GPUserPassword"
 #define REGISTRY_VALUE_REMEMBER_PROFILE		"GPRememberMe"
 
-#define GAMESPY_PATCHING_VERSIONUNIQUE_ID	"test_version_1"
+#define GAMESPY_PATCHING_VERSIONUNIQUE_ID	"ZBT_version_0.1.0"
 #define GAMESPY_PATCHING_DISTRIBUTION_ID	0
 
  
