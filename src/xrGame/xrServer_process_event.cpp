@@ -47,9 +47,11 @@ void xrServer::Process_event	(NET_Packet& P, ClientID sender)
 	{
 	case GE_CLEAR_SAVED_BONES:
 	{
-		const auto po = smart_cast<CSE_PHSkeleton*>(receiver);
-		R_ASSERT(po);
-		po->saved_bones.bones.clear();
+		auto po = smart_cast<CSE_PHSkeleton*>(receiver);
+		if (po != nullptr)
+		{
+			po->saved_bones.bones.clear();
+		}
 		break;
 	}
 	case GE_GAME_EVENT:
