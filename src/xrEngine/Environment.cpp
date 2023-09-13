@@ -51,6 +51,8 @@ CEnvironment::CEnvironment	() :
 	bWFX					= false;
 	Current[0]				= 0;
 	Current[1]				= 0;
+	if (eff_Rain)
+		eff_Rain->InvalidateState();
     CurrentWeather			= 0;
     CurrentWeatherName		= 0;
 	eff_Rain				= 0;
