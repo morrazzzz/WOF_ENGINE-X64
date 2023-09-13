@@ -71,6 +71,8 @@ enum
 	R1FLAG_DLIGHTS				= (1<<0),
 };
 
+extern ECORE_API Flags32		ps_r__common_flags;
+
 // R2
 extern ECORE_API	float		ps_r2_ssaLOD_A;
 extern ECORE_API	float		ps_r2_ssaLOD_B;
@@ -193,6 +195,7 @@ enum
 	R_FLAGEXT_HOM_DEPTH_DRAW		= (1<<7),
 	R2FLAGEXT_SUN_ZCULLING			= (1<<8),
 	R2FLAGEXT_SUN_OLD				= (1<<9),
+	RFLAG_ACTOR_SHADOW				= (1<<10),
 };
 
 extern void						xrRender_initconsole	();

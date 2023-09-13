@@ -164,6 +164,7 @@ Flags32		ps_r2_ls_flags_ext			= {
 		|R2FLAGEXT_ENABLE_TESSELLATION
 	};
 
+Flags32 ps_r__common_flags = {};
 float		ps_r2_df_parallax_h			= 0.02f;
 float		ps_r2_df_parallax_range		= 75.f;
 float		ps_r2_tonemap_middlegray	= 1.f;			// r2-only
@@ -850,6 +851,7 @@ void		xrRender_initconsole	()
 	CMD3(CCC_Mask,		"r2_ssao_hdao",					&ps_r2_ls_flags_ext,		R2FLAGEXT_SSAO_HDAO);//Need restart
 	CMD3(CCC_Mask,		"r4_enable_tessellation",		&ps_r2_ls_flags_ext,		R2FLAGEXT_ENABLE_TESSELLATION);//Need restart
 	CMD3(CCC_Mask,		"r4_wireframe",					&ps_r2_ls_flags_ext,		R2FLAGEXT_WIREFRAME);//Need restart
+	CMD3(CCC_Mask,		"r__actor_shadow",				&ps_r__common_flags,		RFLAG_ACTOR_SHADOW);
 	CMD3(CCC_Mask,		"r2_steep_parallax",			&ps_r2_ls_flags,			R2FLAG_STEEP_PARALLAX);
 	CMD3(CCC_Mask,		"r2_detail_bump",				&ps_r2_ls_flags,			R2FLAG_DETAIL_BUMP);
 
