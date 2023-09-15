@@ -280,8 +280,6 @@ SPS*	CResourceManager::_CreatePS			(LPCSTR _name)
 			FS.update_path				(cname,	"$game_shaders$", cname);
 			file = FS.r_open(cname);
 		}
-
-		IReader* file			= FS.r_open(cname);
 		R_ASSERT2				( file, cname );
 		u32	const size			= file->length();
 		char* const data		= (LPSTR)_alloca(size + 1);
@@ -358,7 +356,6 @@ SGS*	CResourceManager::_CreateGS			(LPCSTR name)
 			FS.update_path				(cname,	"$game_shaders$", cname);
 			file = FS.r_open(cname);
 		}
-		IReader* file			= FS.r_open(cname);
 		R_ASSERT2				( file, cname );
 
 		// Select target
