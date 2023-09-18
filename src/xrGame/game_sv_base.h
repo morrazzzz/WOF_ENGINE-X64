@@ -8,7 +8,7 @@
 #include "game_sv_event_queue.h"
 #include "game_sv_item_respawner.h"
 
-#define MAX_PLAYERS_COUNT 63
+#define MAX_PLAYERS_COUNT 64
 
 enum ERoundEnd_Result
 {
@@ -146,7 +146,6 @@ public:
 	virtual		BOOL				OnPreCreate				(CSE_Abstract* E)				{return TRUE;};
 	virtual		void				OnCreate				(u16 id_who)					{};
 	virtual		void				OnPostCreate			(u16 id_who)					{};
-	virtual		void				OnAlifeCreate			(u16 id_who) {};
 
 
 	virtual		BOOL				OnTouch					(u16 eid_who, u16 eid_target, BOOL bForced = FALSE)	= 0;			// TRUE=allow ownership, FALSE=denied
