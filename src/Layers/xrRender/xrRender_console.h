@@ -198,7 +198,6 @@ enum
 	R2FLAGEXT_SUN_ZCULLING			= (1<<8),
 	R2FLAGEXT_SUN_OLD				= (1<<9),
 	RFLAG_ACTOR_SHADOW				= (1<<10),
-	RFLAG_CLOUD_SHADOWS				= (1<<11),
 };
 
 extern void						xrRender_initconsole	();
