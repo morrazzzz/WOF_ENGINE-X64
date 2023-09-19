@@ -968,8 +968,6 @@ public:
 	}
 };
 
-#include <boost/crc.hpp>
-
 static inline bool match_shader_id		( LPCSTR const debug_shader_id, LPCSTR const full_shader_id, FS_FileSet const& file_set, string_path& result );
 
 HRESULT	CRender::shader_compile			(
