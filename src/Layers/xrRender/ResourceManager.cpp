@@ -388,14 +388,20 @@ void CResourceManager::DeferredUpload()
 	}
 	Msg("texture loading time: %d", timer.GetElapsed_ms());
 }
-/*
-void	CResourceManager::DeferredUnload	()
+
+void CResourceManager::DeferredUnload() 
 {
-	if (!RDEVICE.b_is_Ready)				return;
-	for (map_TextureIt t=m_textures.begin(); t!=m_textures.end(); t++)
-		t->second->Unload();
+	if (!RDEVICE.b_is_Ready)
+		return;
+
+	Msg("%s, texture unloading -> START, size = [%d]", __FUNCTION__, m_textures.size());
+
+	for (auto& texture : m_textures)
+		texture.second->Unload();
+
+	Msg("%s, texture unloading -> COMPLETE", __FUNCTION__);
 }
-*/
+
 #ifdef _EDITOR
 void	CResourceManager::ED_UpdateTextures(AStringVec* names)
 {
@@ -411,8 +417,7 @@ void	CResourceManager::ED_UpdateTextures(AStringVec* names)
 			t->second->Unload();
 	}
 
-	// 2. Load
-	// DeferredUpload	();
+	 DeferredUpload	();
 }
 #endif
 
