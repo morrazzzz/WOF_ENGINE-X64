@@ -808,15 +808,3 @@ void game_sv_freemp::assign_RP(CSE_Abstract* E, game_PlayerState* ps_who)
 		return inherited::assign_RP(E, ps_who);
 }
 
-void game_sv_freemp::OnPostCreate(u16 id)
-{
-	if (smart_cast<CSE_ALifeInventoryBox*>(get_entity_from_eid(id)))
-		invbox_registered.push_back(id);
-}
-
-void game_sv_freemp::OnAlifeCreate(u16 id)
-{
-	if (smart_cast<CSE_ALifeInventoryBox*>(get_entity_from_eid(id)))
-		invbox_registered.push_back(id);
-}
-

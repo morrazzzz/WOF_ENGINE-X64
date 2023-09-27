@@ -84,27 +84,28 @@ u32 GetATIGpuNum()
 
 u32 GetGpuNum()
 {
-	u32 res = GetNVGpuNum();
+	u32 res = 0;
 
-	res = _max( res, GetATIGpuNum() );
+	if (HW.Caps.id_vendor == 0x1002) //AMD
+		res = GetATIGpuNum();
+	else if (HW.Caps.id_vendor == 0x10DE) //NVIDIA
+		res = GetNVGpuNum();
 
-	res = _max( res, 2 );
+	res = _max(res, 2);
 
-	res = _min( res, CHWCaps::MAX_GPUS );
-
+	res = _min(res, CHWCaps::MAX_GPUS);
 	//	It's vital to have at least one GPU, else
 	//	code will fail.
-	VERIFY(res>0);
-
+	VERIFY(res > 0);
 	Msg("* Starting rendering as %d-GPU.", res);
-	
+
 	return res;
 }
 #else
-u32 GetGpuNum()
-{
-	return 1;
-}
+	u32 GetGpuNum()
+	{
+		return 1;
+	}
 #endif
 }
 

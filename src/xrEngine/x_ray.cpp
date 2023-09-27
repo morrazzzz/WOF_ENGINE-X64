@@ -42,10 +42,6 @@ extern	int PASCAL IntroDSHOW_wnd	(HINSTANCE hInstC, HINSTANCE hInstP, LPSTR lpCm
 XRCORE_API	LPCSTR	build_date;
 XRCORE_API	u32		build_id;
 
-#ifdef MASTER_GOLD
-//#	define NO_MULTI_INSTANCES
-#endif // #ifdef MASTER_GOLD
-
 // Always request high performance GPU
 extern "C"
 {
@@ -303,9 +299,11 @@ void destroySound	()
 
 void destroySettings()
 {
-	CInifile** s				= (CInifile**)(&pSettings);
-	xr_delete					( *s		);
-	xr_delete					( pGameIni		);
+	auto s = const_cast<CInifile**>(&pSettings);
+	xr_delete(*s);
+	auto sa = const_cast<CInifile**>(&pSettingsAuth);
+	xr_delete(*sa);
+	xr_delete(pGameIni);
 }
 
 void destroyConsole	()
@@ -695,23 +693,6 @@ int APIENTRY WinMain_impl(HINSTANCE hInstance,
 	}
 
 	// Check for another instance
-#ifdef NO_MULTI_INSTANCES
-	#define STALKER_PRESENCE_MUTEX "Local\\STALKER-COP"
-	
-	HANDLE hCheckPresenceMutex = INVALID_HANDLE_VALUE;
-	hCheckPresenceMutex = OpenMutex( READ_CONTROL , FALSE ,  STALKER_PRESENCE_MUTEX );
-	if ( hCheckPresenceMutex == NULL ) {
-		// New mutex
-		hCheckPresenceMutex = CreateMutex( NULL , FALSE , STALKER_PRESENCE_MUTEX );
-		if ( hCheckPresenceMutex == NULL )
-			// Shit happens
-			return 2;
-	} else {
-		// Already running
-		CloseHandle( hCheckPresenceMutex );
-		return 1;
-	}
-#endif
 #else // DEDICATED_SERVER
 	g_dedicated_server			= true;
 #endif // DEDICATED_SERVER
@@ -851,10 +832,6 @@ int APIENTRY WinMain_impl(HINSTANCE hInstance,
 
 		}
 #ifndef DEDICATED_SERVER
-#ifdef NO_MULTI_INSTANCES		
-		// Delete application presence mutex
-		CloseHandle( hCheckPresenceMutex );
-#endif
 	}
 	// here damn_keys_filter class instanse will be destroyed
 #endif // DEDICATED_SERVER

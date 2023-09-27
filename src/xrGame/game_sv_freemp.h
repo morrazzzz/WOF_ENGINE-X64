@@ -12,7 +12,6 @@ class game_sv_freemp : public game_sv_mp, private pure_relcase
 
 protected:
 	xr_vector<u16> inventory_boxes;
-	xr_vector<u16> invbox_registered;
 	xr_map<u16, u32> inv_box;
 
 public:
@@ -71,8 +70,4 @@ public:
 	
 	virtual		bool				LoadPlayerPosition(game_PlayerState* ps, Fvector& pos, Fvector& angle, float& health);
 	virtual void					assign_RP(CSE_Abstract* E, game_PlayerState* ps_who);
-
-
-	virtual		void	OnPostCreate(u16 id);
-	virtual		void	OnAlifeCreate(u16 id);
 };

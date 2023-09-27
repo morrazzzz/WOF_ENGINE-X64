@@ -3049,9 +3049,9 @@ void register_mp_console_commands()
 {
 	CMD1(CCC_WriteItemsToLog, "items_print");
 
-//	CMD1(ÑÑÑ_StartSurge,    "adm_surge");
-//	CMD1(ÑÑÑ_StartFallout,  "adm_fallout");
-//	CMD1(ÑÑÑ_StartPsi,		"adm_psistorm");
+	CMD1(ÑÑÑ_StartSurge,    "adm_surge");
+	CMD1(ÑÑÑ_StartFallout,  "adm_fallout");
+	CMD1(ÑÑÑ_StartPsi,		"adm_psistorm");
 	CMD4(CCC_Vector3, "cam_2_offset",
 
 		&CCameraLook2::m_cam_offset,

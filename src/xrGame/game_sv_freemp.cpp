@@ -315,9 +315,9 @@ void game_sv_freemp::Update()
 	if (Level().game && Device.dwFrame % 300 == 0)
 	{
 
-		for (auto box_id : invbox_registered)
+		for (int i = 0; i != server().GetEntitiesNum(); i++)
 		{
-			CSE_Abstract* abs = server().GetEntity(box_id);
+			CSE_Abstract* abs = server().GetEntity(i);
 			CSE_ALifeInventoryBox* box = smart_cast<CSE_ALifeInventoryBox*>(abs);
 			if (box)
 			{

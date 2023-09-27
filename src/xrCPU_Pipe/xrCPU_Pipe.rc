@@ -27,8 +27,8 @@ LANGUAGE LANG_RUSSIAN, SUBLANG_DEFAULT
 //
 
 VS_VERSION_INFO VERSIONINFO
- FILEVERSION 1,6,0,2
- PRODUCTVERSION 1,6,0,2
+ FILEVERSION 0,1,0
+ PRODUCTVERSION 0,1,0
  FILEFLAGSMASK 0x17L
 #ifdef _DEBUG
  FILEFLAGS 0x1L
@@ -45,12 +45,12 @@ BEGIN
         BEGIN
             VALUE "CompanyName", "GSC Game World"
             VALUE "FileDescription", "X-Ray CPU-dependent helper library"
-            VALUE "FileVersion", "1.6.02"
+            VALUE "FileVersion", "0.1.0"
             VALUE "InternalName", "CPU Pipe"
             VALUE "LegalCopyright", "Copyright (C) 2009 GSC Game World"
             VALUE "OriginalFilename", "xrCPU_Pipe.dll"
             VALUE "ProductName", "S.T.A.L.K.E.R.: Call Of Pripyat"
-            VALUE "ProductVersion", "1.6.0.2"
+            VALUE "ProductVersion", "0.1.0"
         END
     END
     BLOCK "VarFileInfo"

@@ -37,12 +37,12 @@ CUIMpServerAdm::CUIMpServerAdm()
 		m_pChangeWeatherBtn->SetMessageTarget(this);
 	}
 
-	/*
+	
 	m_atmosfear3 = xr_new<CUI3tButton>();
 	m_atmosfear3->SetAutoDelete(true);
 	m_pMainSelectionWnd->AttachChild(m_atmosfear3);
 	m_atmosfear3->SetMessageTarget(this);
-    */
+    
 
 	m_pChangeGameTypeBtn = xr_new<CUI3tButton>();
 	m_pChangeGameTypeBtn->SetAutoDelete(true);
@@ -286,7 +286,7 @@ void CUIMpServerAdm::Init(CUIXml& xml_doc)
 	CUIXmlInit::InitCheck(xml_doc, "server_adm:game_limits_selection_wnd:friendly_names_check", 0, m_pFriendlyNamesCheck);
 	CUIXmlInit::InitCheck(xml_doc, "server_adm:game_limits_selection_wnd:friendly_indic_check", 0, m_pFriendlyIndicCheck);
 	CUIXmlInit::InitCheck(xml_doc, "server_adm:game_limits_selection_wnd:bearer_cant_sprint_check", 0, m_pBearerCantSprintCheck);
-	//CUIXmlInit::Init3tButton(xml_doc, "atmosfear3:button", 0, m_atmosfear3);
+	CUIXmlInit::Init3tButton(xml_doc, "atmosfear3:button", 0, m_atmosfear3);
 
 	m_pSpectatorFECheck->SetCurrentOptValue();
 	m_pSpectatorFFCheck->SetCurrentOptValue();

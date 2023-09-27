@@ -45,6 +45,15 @@ void xrServer::Process_event	(NET_Packet& P, ClientID sender)
 
 	switch		(type)
 	{
+	case GE_CLEAR_SAVED_BONES:
+	{
+		auto po = smart_cast<CSE_PHSkeleton*>(receiver);
+		if (po != nullptr)
+		{
+			po->saved_bones.bones.clear();
+		}
+		break;
+	}
 	case GE_GAME_EVENT:
 		{
 			u16		game_event_type;

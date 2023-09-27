@@ -158,7 +158,7 @@ void game_sv_roleplay::RespawnPlayer(ClientID id_who, bool NoSpectator)
 	CSE_ALifeCreatureActor	*pA = smart_cast<CSE_ALifeCreatureActor*>(xrCData->owner);
 	if (!pA) return;
 	
-	SpawnItemToActor(pA->ID, "mp_players_rukzak");
+	//SpawnItemToActor(pA->ID, "mp_players_rukzak");
 	 
 	if (m_uTeamAdmin != 0)
 	if (ps->team == m_uTeamAdmin)
@@ -216,14 +216,6 @@ BOOL game_sv_roleplay::OnTouch(u16 eid_who, u16 eid_what, BOOL bForced)
 	CSE_Abstract *e_entity = m_server->ID_to_entity(eid_what);
 	if (!e_entity)
 		return FALSE;
-
-	// pick up players bag
-	if (e_entity->m_tClassID == CLSID_OBJECT_PLAYERS_BAG)
-	{
-		return OnTouchPlayersBag(e_who, e_entity);
-	}
-
-	return TRUE;
 }
 
 void game_sv_roleplay::OnDetach(u16 eid_who, u16 eid_what)
@@ -235,18 +227,6 @@ void game_sv_roleplay::OnDetach(u16 eid_who, u16 eid_what)
 	CSE_Abstract *e_entity = m_server->ID_to_entity(eid_what);
 	if (!e_entity)
 		return;
-	
-	// drop players bag
- 	xrClientData* data = (xrClientData*) get_client(eid_who);
-
- 	if (e_entity->m_tClassID == CLSID_OBJECT_PLAYERS_BAG )
-	{
-		if (data)
-			OnDetachPlayersBag(e_who, e_entity);
-		else
-			//DestroyGameItem(e_entity);
-			to_destroy.push_back(e_entity);
-	}
 }
 
 void game_sv_roleplay::OnPlayerDisconnect(ClientID id_who, LPSTR Name, u16 GameID)
