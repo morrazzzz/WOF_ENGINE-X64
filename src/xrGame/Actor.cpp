@@ -80,10 +80,7 @@ const float		respawn_auto	= 7.f;
 
 static float IReceived = 0;
 static float ICoincidenced = 0;
-extern float cammera_into_collision_shift;
-
-u32	death_camera_mode = READ_IF_EXISTS(pSettings, r_u32, "gameplay", "death_camera_mode", 1);;
-
+extern float cammera_into_collision_shift ;
 
 string32		ACTOR_DEFS::g_quick_use_slots[4]={NULL, NULL, NULL, NULL};
 //skeleton
@@ -952,18 +949,13 @@ void CActor::Die	(CObject* who)
 		CurrentGameUI()->HideShownDialogs();
 	}
 
-	if (IsGameTypeSingle())
+	if	(IsGameTypeSingle())
 	{
-		if (death_camera_mode == 1)
-			cam_Set(eacFreeLook);
-		else if (death_camera_mode == 2)
-			cam_Set(eacFixedLookAt);
-		else if (death_camera_mode == 3)
-			cam_Set(eacFirstEye);
-
-		CurrentGameUI()->HideShownDialogs();
-
-		start_tutorial("game_over");
+		cam_Set				(eacFreeLook);
+		start_tutorial		("game_over");
+	} else
+	{
+		cam_Set				(eacFixedLookAt);
 	}
 	
 	mstate_wishful	&=		~mcAnyMove;
