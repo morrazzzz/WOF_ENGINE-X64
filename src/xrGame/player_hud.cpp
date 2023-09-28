@@ -276,16 +276,29 @@ void hud_item_measures::load(const shared_str& sect_name, IKinematics* K)
 	m_hands_offset[0][0].set	(0,0,0);
 	m_hands_offset[1][0].set	(0,0,0);
 
-	strconcat					(sizeof(val_name),val_name,"aim_hud_offset_pos",_prefix);
-	m_hands_offset[0][1]		= pSettings->r_fvector3(sect_name, val_name);
-	strconcat					(sizeof(val_name),val_name,"aim_hud_offset_rot",_prefix);
-	m_hands_offset[1][1]		= pSettings->r_fvector3(sect_name, val_name);
+	strconcat(sizeof(val_name), val_name, "aim_hud_offset_pos", _prefix);
+	if (pSettings->line_exist(sect_name, val_name))
+		m_hands_offset[0][1] = pSettings->r_fvector3(sect_name, val_name);
+	else
+		m_hands_offset[0][1] = { 0.f, 0.f, 0.f };
 
-	strconcat					(sizeof(val_name),val_name,"gl_hud_offset_pos",_prefix);
-	m_hands_offset[0][2]		= pSettings->r_fvector3(sect_name, val_name);
-	strconcat					(sizeof(val_name),val_name,"gl_hud_offset_rot",_prefix);
-	m_hands_offset[1][2]		= pSettings->r_fvector3(sect_name, val_name);
+	strconcat(sizeof(val_name), val_name, "aim_hud_offset_rot", _prefix);
+	if (pSettings->line_exist(sect_name, val_name))
+		m_hands_offset[1][1] = pSettings->r_fvector3(sect_name, val_name);
+	else
+		m_hands_offset[1][1] = { 0.f, 0.f, 0.f };
 
+	strconcat(sizeof(val_name), val_name, "gl_hud_offset_pos", _prefix);
+	if (pSettings->line_exist(sect_name, val_name))
+		m_hands_offset[0][2] = pSettings->r_fvector3(sect_name, val_name);
+	else
+		m_hands_offset[0][2] = { 0.f, 0.f, 0.f };
+
+	strconcat(sizeof(val_name), val_name, "gl_hud_offset_rot", _prefix);
+	if (pSettings->line_exist(sect_name, val_name))
+		m_hands_offset[1][2] = pSettings->r_fvector3(sect_name, val_name);
+	else
+		m_hands_offset[1][2] = { 0.f, 0.f, 0.f };
 
 	R_ASSERT2(pSettings->line_exist(sect_name,"fire_point")==pSettings->line_exist(sect_name,"fire_bone"),		sect_name.c_str());
 	R_ASSERT2(pSettings->line_exist(sect_name,"fire_point2")==pSettings->line_exist(sect_name,"fire_bone2"),	sect_name.c_str());
