@@ -128,7 +128,7 @@ void CSoundRender_CoreA::_initialize(int stage)
 	A_CHK(alListenerf(AL_GAIN, 1.f));
 
 	// Check for EAX extension
-	bEAX = deviceDesc.props.eax && !deviceDesc.props.eax_unwanted;
+	bEAX = true;// deviceDesc.props.eax && !deviceDesc.props.eax_unwanted;
 
 	eaxSet = (EAXSet)alGetProcAddress((const ALchar*)"EAXSet");
 	if (eaxSet == NULL) bEAX = false;
@@ -139,6 +139,14 @@ void CSoundRender_CoreA::_initialize(int stage)
 	{
 		bDeferredEAX = EAXTestSupport(TRUE);
 		bEAX = EAXTestSupport(FALSE);
+
+
+		if (bEAX)
+			Msg("- SOUND: OpenAL: EAX Supported");
+		else
+			Msg("! SOUND: OpenAL: EAX Unsupported");
+		if (bDeferredEAX)
+			Msg("! SOUND: OpenAL: EAX Deffered");
 	}
 
 	inherited::_initialize(stage);
