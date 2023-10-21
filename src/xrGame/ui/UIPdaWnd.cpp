@@ -53,7 +53,7 @@ CUIPdaWnd::~CUIPdaWnd()
 //-	delete_data( pUIFactionWarWnd );
 	delete_data( pUIRankingWnd );
 	delete_data( pUILogsWnd );
-	delete_data(pUILogsWnd);
+	delete_data(pUI_PdaChat);
 
 
 	delete_data( m_hint_wnd );
