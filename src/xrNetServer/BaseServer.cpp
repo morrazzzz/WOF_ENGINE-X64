@@ -6,7 +6,7 @@
 
 
 XRNETSERVER_API ClientID BroadcastCID(0xffffffff);
-XRNETSERVER_API int psNET_ServerUpdate = 30; // FPS
+XRNETSERVER_API int psNET_ServerUpdate = 60; // FPS
 XRNETSERVER_API int psNET_ServerPending = 3;
 XRNETSERVER_API BOOL psNET_direct_connect = FALSE;
 
