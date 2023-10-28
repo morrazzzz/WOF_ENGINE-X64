@@ -2515,9 +2515,6 @@
     <Filter Include="UI\GameTypes\FreeMp\RP_ANIMATION_MODE">
       <UniqueIdentifier>{8c450480-22ac-4eef-a70a-4b8bf5264677}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Core\Client\Objects\actor\Bacpack">
-      <UniqueIdentifier>{91fcbea0-2f5f-42f2-9166-f084b51f7197}</UniqueIdentifier>
-    </Filter>
     <Filter Include="UI\Common\MainIngame\Craft">
       <UniqueIdentifier>{2e9760cf-2f62-4467-b533-f246c58fee18}</UniqueIdentifier>
     </Filter>
@@ -7446,9 +7443,6 @@
     <ClInclude Include="UI_AnimMode.h">
       <Filter>UI\GameTypes\FreeMp\RP_ANIMATION_MODE</Filter>
     </ClInclude>
-    <ClInclude Include="ActorBackpack.h">
-      <Filter>Core\Client\Objects\actor\Bacpack</Filter>
-    </ClInclude>
     <ClInclude Include="GameCraft.h">
       <Filter>UI\Common\MainIngame\Craft</Filter>
     </ClInclude>
@@ -7463,6 +7457,9 @@
     </ClInclude>
     <ClInclude Include="VoiceSender.h">
       <Filter>Core\Client\VoiceChat</Filter>
+    </ClInclude>
+    <ClInclude Include="ActorBackpack.h">
+      <Filter>Core\Client\Objects\items &amp; weapons\Outfit</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -11156,9 +11153,6 @@
     <ClCompile Include="ActorAnimation_Scripts.cpp">
       <Filter>Core\Client\Objects\actor\base</Filter>
     </ClCompile>
-    <ClCompile Include="ActorBackpack.cpp">
-      <Filter>Core\Client\Objects\actor\Bacpack</Filter>
-    </ClCompile>
     <ClCompile Include="GameCraft.cpp">
       <Filter>UI\Common\MainIngame\Craft</Filter>
     </ClCompile>
@@ -11173,6 +11167,9 @@
     </ClCompile>
     <ClCompile Include="VoiceSender.cpp">
       <Filter>Core\Client\VoiceChat</Filter>
+    </ClCompile>
+    <ClCompile Include="ActorBackpack.cpp">
+      <Filter>Core\Client\Objects\items &amp; weapons\Outfit</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

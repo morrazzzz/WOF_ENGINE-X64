@@ -26,7 +26,7 @@ void CActorBackpack::Load(LPCSTR section)
 
 	m_flags.set(FUsingCondition, READ_IF_EXISTS(pSettings, r_bool, section, "use_condition", TRUE));
 }
-					   
+
 void CActorBackpack::Hit(float hit_power, ALife::EHitType hit_type)
 {
 	//if (IsUsingCondition() == false) return;
@@ -34,6 +34,30 @@ void CActorBackpack::Hit(float hit_power, ALife::EHitType hit_type)
 	ChangeCondition(-hit_power);
 }
 
+
+BOOL CActorBackpack::net_Spawn(CSE_Abstract* DC)
+{
+	return inherited::net_Spawn(DC);
+}
+
+void CActorBackpack::net_Export(NET_Packet& P)
+{
+	inherited::net_Export(P);
+	//P.w_float_q8(GetCondition(), 0.0f, 1.0f);
+}
+
+void CActorBackpack::net_Import(NET_Packet& P)
+{
+	inherited::net_Import(P);
+	/* 	float _cond;
+		P.r_float_q8(_cond, 0.0f, 1.0f);
+		SetCondition(_cond); */
+}
+
+void CActorBackpack::OnH_A_Chield()
+{
+	inherited::OnH_A_Chield();
+}
 
 bool CActorBackpack::install_upgrade_impl(LPCSTR section, bool test)
 {
