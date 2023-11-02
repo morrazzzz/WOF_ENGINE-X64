@@ -651,7 +651,7 @@ bool CInventory::Action(u16 cmd, u32 flags)
 {
 	CActor *pActor = smart_cast<CActor*>(m_pOwner);
 	
-	if (pActor)
+	/*if (pActor) // если что откатимся
 	{
 		if (pActor->MpSafeMODE())
 			return false;
@@ -659,9 +659,12 @@ bool CInventory::Action(u16 cmd, u32 flags)
 		if (pActor->MpAnimationMODE())
 			return false;
 	}
-
+	*/
 	if (pActor)
 	{
+		if (pActor->MpSafeMODE() || pActor->MpAnimationMODE())
+			return false;
+
 		switch(cmd)
 		{
 			case kWPN_FIRE:
