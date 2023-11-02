@@ -20,25 +20,33 @@ static BOOL 				no_log			= TRUE;
 xr_vector<shared_str>*		LogFile			= NULL;
 static LogCallback			LogCB			= 0;
 
-IWriter* LogFS = 0;
+IWriter* writer_log = 0;
+
+CTimer dwTimerLog;
 
 void FlushLog			()
 {
+	if (writer_log && dwTimerLog.GetElapsed_ms() > 500)
+	{
+		dwTimerLog.Start();
+		writer_log->flush();
+	}
+
+	/*
 	if (!no_log)
 	{
-		/*
 		logCS.Enter			();
 		IWriter *f			= FS.w_open(logFName);
-        if (f) {
-            for (u32 it=0; it<LogFile->size(); it++)	{
+		if (f) {
+			for (u32 it=0; it<LogFile->size(); it++)	{
 				LPCSTR		s	= *((*LogFile)[it]);
 				f->w_string	(s?s:"");
 			}
-            FS.w_close		(f);
-        }
+			FS.w_close		(f);
+		}
 		logCS.Leave			();
-		*/
-    }
+	}
+	*/
 }
 
 void AddOne				(const char *split) 
@@ -62,10 +70,10 @@ void AddOne				(const char *split)
 		LogFile->push_back	(temp);
 	}
 
-	if (LogFS)
+	if (writer_log)
 	{
-		LogFS->w_string(split);
-		LogFS->flush();
+		writer_log->w_string(split);
+		writer_log->flush();
 	}
 
 
@@ -190,6 +198,8 @@ void InitLog()
 	R_ASSERT			(LogFile==NULL);
 	LogFile				= xr_new< xr_vector<shared_str> >();
 	LogFile->reserve	(1000);
+
+	dwTimerLog.Start();
 }
 
 void CreateLog			(BOOL nl)
@@ -207,12 +217,12 @@ void CreateLog			(BOOL nl)
         FS.w_close		(f);
     }
 
-	if (!LogFS)
+	if (!writer_log)
 	{
-		LogFS = FS.w_open(logFName);
+		writer_log = FS.w_open(logFName);
 
 		for (auto str : *LogFile)
-		LogFS->w_string(str.c_str());
+			writer_log->w_string(str.c_str());
 	}
 }
 
@@ -222,5 +232,5 @@ void CloseLog(void)
  	LogFile->clear	();
 	xr_delete		(LogFile);
 
-	FS.w_close(LogFS);
+	FS.w_close(writer_log);
 }
