@@ -6,6 +6,8 @@
 #include "../../3rd party/ode/include/ode/common.h"
 #include "../ExtendedGeom.h"
 #include "dTriColliderMath.h"
+#include <cstddef>
+#include "../../xrCore/_flags.h"
 
 
 extern xr_vector< flags8 >			gl_cl_tries_state	;
@@ -29,6 +31,7 @@ inline dSurfaceParameters* SURFACE(dContactGeom* ptr, const int stride)
 
 //#define CONTACT(Ptr, Stride) ((dContactGeom*) (((char*)Ptr) + (Stride)))
 //#define SURFACE(Ptr, Stride) ((dSurfaceParameters*) (((char*)Ptr) + (Stride-sizeof(dSurfaceParameters))))
+
 #define NUMC_MASK (0xffff)
 
 #define M_SIN_PI_3		REAL(0.8660254037844386467637231707529362)
