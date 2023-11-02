@@ -84,14 +84,14 @@ struct SScript_AnimInput
 
 struct SScript_AnimOut
 {
-	MotionID m_animation[MAX_ANIMS][MAX_SIZE_ANIMS_INOUT];
+	MotionID m_animation_out[MAX_ANIMS][MAX_SIZE_ANIMS_INOUT];
 	u32 count[MAX_ANIMS];
 };
 
 struct SScript_AnimMiddle
 {
-	MotionID m_animation[32][32];
-	u32 count[32];
+	MotionID m_animation[MAX_ANIMS][MAX_SIZE_ANIMS_INOUT];
+	u32 count[MAX_ANIMS];
 };
 
 
