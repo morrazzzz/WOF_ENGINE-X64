@@ -33,7 +33,7 @@ bool CActor::MpAnimationMODE() const
 void SActorStateAnimation::CreateAnimationsScripted(IKinematicsAnimated* K)
 {
 	string_path filepath;
-	FS.update_path(filepath, "$game_config$", "alife\\actor_anims.ltx");
+	FS.update_path(filepath, "$game_config$", "actor_anims.ltx");
 	CInifile* file = xr_new<CInifile>(filepath, true, true);
 
 	if (file && file->section_exist("animations"))
