@@ -2003,7 +2003,6 @@ CMD4(CCC_Integer,			"hit_anims_tune",						&tune_hit_anims,		0, 1);
 #ifndef MASTER_GOLD
 	CMD1(CCC_JumpToLevel,	"jump_to_level"		);
 	CMD3(CCC_Mask,			"g_god",			&psActorFlags,	AF_GODMODE	);
-	CMD3(CCC_Mask,			"g_autoreload", &psActorFlags, AF_AUTORELOAD);
 	CMD3(CCC_Mask,			"g_unlimitedammo",	&psActorFlags,	AF_UNLIMITEDAMMO);
 	CMD1(CCC_Script,		"run_script");
 	CMD1(CCC_ScriptCommand,	"run_string");
@@ -2013,6 +2012,7 @@ CMD4(CCC_Integer,			"hit_anims_tune",						&tune_hit_anims,		0, 1);
 	CMD3(CCC_Mask,		"g_autopickup",			&psActorFlags,	AF_AUTOPICKUP);
 	CMD3(CCC_Mask,		"g_dynamic_music",		&psActorFlags,	AF_DYNAMIC_MUSIC);
 	CMD3(CCC_Mask,		"g_important_save",		&psActorFlags,	AF_IMPORTANT_SAVE);
+	CMD3(CCC_Mask,		"g_autoreload", &psActorFlags, AF_AUTORELOAD);
 	
 #ifdef DEBUG
 	CMD1(CCC_LuaHelp,				"lua_help");
