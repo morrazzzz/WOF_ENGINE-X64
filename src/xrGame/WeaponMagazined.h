@@ -30,6 +30,8 @@ protected:
 	ESoundTypes		m_eSoundShot;
 	ESoundTypes		m_eSoundEmptyClick;
 	ESoundTypes		m_eSoundReload;
+	ESoundTypes		m_eSoundAim;
+	ESoundTypes		m_eSoundAimOut;
 	ESoundTypes		m_eSoundClose;
 	bool			m_sounds_enabled;
 	// General
@@ -171,6 +173,7 @@ protected:
 	virtual void	PlayAnimShoot();
 	virtual void	PlayReloadSound();
 	virtual void	PlayAnimAim();
+	virtual void    PlaySoundAim(bool in = true);
 	virtual void	PlayAnimBore();
 	virtual void	PlayAnimIdleSprint();
 	virtual void	PlayAnimIdleMoving();
