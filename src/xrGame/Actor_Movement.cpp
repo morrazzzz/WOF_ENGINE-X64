@@ -286,20 +286,20 @@ void CActor::g_cl_CheckControls(u32 mstate_wf, Fvector &vControlAccel, float &Ju
 	{
 	LPCSTR state_anm				= NULL;
 
-	if(mstate_real&mcSprint && !(mstate_old&mcSprint) )
-		state_anm					= "sprint";
-	else
-	if(mstate_real&mcLStrafe && !(mstate_old&mcLStrafe) )
-		state_anm					= "strafe_left";
-	else
-	if(mstate_real&mcRStrafe && !(mstate_old&mcRStrafe) )
-		state_anm					= "strafe_right";
-	else
-	if(mstate_real&mcFwd && !(mstate_old&mcFwd) )
-		state_anm					= "move_fwd";
-	else
-	if(mstate_real&mcBack && !(mstate_old&mcBack) )
-		state_anm					= "move_back";
+	if (mstate_real & mcSprint && !(mstate_old & mcSprint))
+		state_anm = "sprint";
+	else if (mstate_real & mcLStrafe && !(mstate_old & mcLStrafe))
+		state_anm = "strafe_left";
+	else if (mstate_real & mcRStrafe && !(mstate_old & mcRStrafe))
+		state_anm = "strafe_right";
+	else if (mstate_real & mcFwd && !(mstate_old & mcFwd))
+		state_anm = "go_front";
+	else if (mstate_real & mcBack && !(mstate_old & mcBack))
+		state_anm = "go_back";
+	else if (mstate_real & mcJump && !(mstate_old & mcJump))
+		state_anm = "jump";
+	else if (mstate_real & mcFall && !(mstate_old & mcFall))
+		state_anm = "down";
 
 		if(state_anm)
 		{ //play moving cam effect
