@@ -986,7 +986,6 @@ HRESULT	CRender::shader_compile			(
 	D3D_SHADER_MACRO				defines			[128];
 	int								def_it			= 0;
 	char							c_smapsize		[32];
-	char							c_gloss[32];
 	char							c_sun_shafts	[32];
 	char							c_ssao			[32];
 	char							c_sun_quality	[32];
@@ -1092,16 +1091,6 @@ HRESULT	CRender::shader_compile			(
 		def_it						++	;
 	}
 	sh_name[len]='0'+char(o.sunstatic); ++len;
-
-	if (o.forcegloss)
-	{
-		xr_sprintf(c_gloss, "%f", o.forcegloss_v);
-		defines[def_it].Name = "FORCE_GLOSS";
-		defines[def_it].Definition = c_gloss;
-		def_it++;
-	}
-	sh_name[len] = '0' + char(o.forcegloss);
-	++len;
 
 	if (o.forceskinw)		{
 		defines[def_it].Name		=	"SKIN_COLOR";
