@@ -969,9 +969,6 @@ void CActor::Die	(CObject* who)
 
 		CurrentGameUI()->HideShownDialogs();
 		start_tutorial("game_over");
-	} else
-	{
-		cam_Set				(eacFixedLookAt);
 	}
 	
 	mstate_wishful	&=		~mcAnyMove;
