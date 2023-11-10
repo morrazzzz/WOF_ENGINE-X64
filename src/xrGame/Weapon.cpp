@@ -1947,12 +1947,14 @@ const float &CWeapon::hit_probability	() const
 	return					(m_hit_probability[egdNovice]);
 }
 
+BOOL EnableDof = true;
+
 void CWeapon::OnStateSwitch	(u32 S)
 {
 	inherited::OnStateSwitch(S);
 	m_BriefInfo_CalcFrame = 0;
 
-	if (GetState() == eReload)
+	if (EnableDof && GetState() == eReload)
 	{
 		if (iAmmoElapsed == 0)
 		{
