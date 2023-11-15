@@ -25,6 +25,9 @@ static const float	s_fLandingTime2		= 0.3f;// через сколько снять флаг Landing2 
 static const float	s_fJumpTime			= 0.3f;
 static const float	s_fJumpGroundTime	= 0.1f;	// для снятия флажка Jump если на земле
 	   const float	s_fFallTime			= 0.2f;
+	   float f_CoefReturnSpeed = 11.5f;
+	   float s_fDecreaseSpeed = 14.f;
+	   float m_fDecreaseWalkAccel;
 
 IC static void generate_orthonormal_basis1(const Fvector& dir,Fvector& updir, Fvector& right)
 {
@@ -192,6 +195,11 @@ void CActor::g_cl_CheckControls(u32 mstate_wf, Fvector &vControlAccel, float &Ju
 		// jump
 		m_fJumpTime				-=	dt;
 
+		if (m_fDecreaseWalkAccel > 0)
+			m_fDecreaseWalkAccel -= dt * f_CoefReturnSpeed;
+		if (m_fDecreaseWalkAccel < 0)
+			m_fDecreaseWalkAccel = 0;
+
 		if( CanJump() && (mstate_wf&mcJump) )
 		{
 			mstate_real			|=	mcJump;
@@ -199,6 +207,7 @@ void CActor::g_cl_CheckControls(u32 mstate_wf, Fvector &vControlAccel, float &Ju
 			Jump				= m_fJumpSpeed;
 			m_fJumpTime			= s_fJumpTime;
 
+			m_fDecreaseWalkAccel = s_fDecreaseSpeed;
 
 			//уменьшить силу игрока из-за выполненого прыжка
 			if (!GodMode() && !MpGodMode())
@@ -252,7 +261,7 @@ void CActor::g_cl_CheckControls(u32 mstate_wf, Fvector &vControlAccel, float &Ju
 			float	scale			= vControlAccel.magnitude();
 			if(scale>EPS)	
 			{
-				scale	=	m_fWalkAccel/scale;
+				scale = (m_fWalkAccel - m_fDecreaseWalkAccel) / scale;
 				if (bAccelerated)
 					if (mstate_real&mcBack)
 						scale *= m_fRunBackFactor;
