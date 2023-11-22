@@ -72,6 +72,7 @@
 #include "ui/uiMotionIcon.h"
 #include "ui/UIActorMenu.h"
 #include "ActorHelmet.h"
+#include "ActorBackpack.h"
 #include "UI/UIDragDropReferenceList.h"
 
 const u32		patch_frames	= 50;
@@ -1938,9 +1939,7 @@ void CActor::UpdateArtefactsOnBeltAndOutfit()
 		conditions().ChangePower		(outfit->m_fPowerRestoreSpeed     * f_update_time);
 		conditions().ChangeSatiety		(outfit->m_fSatietyRestoreSpeed   * f_update_time);
 		conditions().ChangeRadiation	(outfit->m_fRadiationRestoreSpeed * f_update_time);
-	}
-	else
-	{
+
 		CHelmet* pHelmet				= smart_cast<CHelmet*>(inventory().ItemFromSlot(HELMET_SLOT));
 		if(!pHelmet)
 		{
@@ -1950,6 +1949,10 @@ void CActor::UpdateArtefactsOnBeltAndOutfit()
 				pTorch->SwitchNightVision(false);
 			}
 		}
+	}
+	else
+	{
+		CActorBackpack* pActorBackpack = smart_cast<CActorBackpack*>(inventory().ItemFromSlot(BACKPACK_SLOT));
 	}
 }
 
