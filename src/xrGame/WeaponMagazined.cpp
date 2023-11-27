@@ -25,16 +25,7 @@
 
 ENGINE_API	bool	g_dedicated_server;
 
-CUIXml* pWpnScopeXml = NULL;
-
-void createWpnScopeXML()
-{
-	if (!pWpnScopeXml)
-	{
-		pWpnScopeXml = xr_new<CUIXml>();
-		pWpnScopeXml->Load(CONFIG_PATH, UI_PATH, "scopes.xml");
-	}
-}
+//CUIXml*				pWpnScopeXml = NULL;
 
 CWeaponMagazined::CWeaponMagazined(ESoundTypes eSoundType) : CWeapon()
 {
