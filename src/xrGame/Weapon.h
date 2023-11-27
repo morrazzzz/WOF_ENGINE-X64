@@ -171,9 +171,7 @@ public:
 
 	//для отоброажения иконок апгрейдов в интерфейсе
 	int	GetScopeX();// {return pSettings->r_s32(m_scopes[m_cur_scope], "scope_x"); }
-	int	GetScopeY();
-	bool bReloadSectionScope(LPCSTR section);
-	// {return pSettings->r_s32(m_scopes[m_cur_scope], "scope_y"); }
+	int	GetScopeY();// {return pSettings->r_s32(m_scopes[m_cur_scope], "scope_y"); }
 	int	GetSilencerX() {return m_iSilencerX;}
 	int	GetSilencerY() {return m_iSilencerY;}
 	int	GetGrenadeLauncherX() {return m_iGrenadeLauncherX;}

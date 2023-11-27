@@ -2091,30 +2091,15 @@ int	CWeapon::GetScopeY()
 		return pSettings->r_s32(m_scopes[m_cur_scope], "scope_y");
 }
 
-bool CWeapon::bReloadSectionScope(LPCSTR section)
-{
-	if (!pSettings->line_exist(section, "scopes"))
-		return false;
-
-	if (pSettings->r_string(section, "scopes") == NULL)
-		return false;
-
-	if (xr_strcmp(pSettings->r_string(section, "scopes"), "none") == 0)
-		return false;
-
-	return true;
-}
-
 bool CWeapon::bLoadAltScopesParams(LPCSTR section)
 {
-	if (!pSettings->line_exist(section, "scopes"))
+	 if (!pSettings->line_exist(section, "scopes"))
 		return false;
 
-	if (pSettings->r_string(section, "scopes") == NULL)
+	if (!xr_strcmp(pSettings->r_string(section, "scopes"), "none"))
 		return false;
 
-	if (xr_strcmp(pSettings->r_string(section, "scopes"), "none") == 0)
-		return false;
+	//Msg("Load AltScopes [%s]", section);
 
 	if (m_eScopeStatus == ALife::eAddonAttachable)
 	{
@@ -2124,6 +2109,7 @@ bool CWeapon::bLoadAltScopesParams(LPCSTR section)
 			string128 scope_section;
 			_GetItem(str, i, scope_section);
 			m_scopes.push_back(scope_section);
+			//Msg("Scope [%s]", scope_section);
 		}
 	}
 	else if (m_eScopeStatus == ALife::eAddonPermanent)
